@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>AniMega Home</title>
+  <link rel="stylesheet" href="/public/css/style.css">
+</head>
+<body>
+  <header>
+    <h1>Welcome to AniMega!</h1>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/anime">Anime List</a></li>
+      <li><a href="/manga">Manga List</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <section>
+      <h2>Featured Anime</h2>
+        <div class="anime-card">
+          <p>ID: <%= media.id %></p>
+          <h2>Title</h2>
+          <ul>
+            <li>Romaji: <%= media.title.romaji %></li>
+            <li>English: <%= media.title.english %></li>
+            <li>Native: <%= media.title.native %></li>
+          </ul>
+        </div>
+    </section>
+    <section>
+      <h2>Search Anime</h2>
+      <% include search-bar.ejs %> <!-- Include the search bar -->
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2023 AniMega. All rights reserved.</p>
+  </footer>
+</body>
+</html>
