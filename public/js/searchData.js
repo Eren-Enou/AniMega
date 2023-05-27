@@ -17,7 +17,7 @@ query ($search: String, $status: MediaStatus) {
         trailer
         coverImage
         genres
-        synonyms
+        synonyms 
         averageScore
         popularity
         trending
@@ -34,22 +34,22 @@ query ($search: String, $status: MediaStatus) {
 
 // Here we define our query as a multi-line string
 // Storing it in a separate .graphql/.gql file is also possible
-var query = `
-query ($id: Int) { # Define which variables will be used in the query (id)
-  Media (id: $id, type: ANIME) { # Insert our variables into the query arguments (id) (type: ANIME is hard-coded in the query)
-    id
-    title {
-      romaji
-      english
-      native
+var searchQuery = `
+query SearchAnimeName($search: String) {
+    Page(page:1, perPage:5){
+        media(search: $search, type: ANIME) {
+      title {
+        english
+        native
+      }
+    }
     }
   }
-}
 `;
 
 // Define our query variables and values that will be used in the query request
 var variables = {
-    id: 15125
+    search: searchQuery
 };
 
 // Define the config we'll need for our Api request
@@ -61,13 +61,13 @@ var url = 'https://graphql.anilist.co',
             'Accept': 'application/json',
         },
         data: {
-            query: query,
+            query: searchQuery,
             variables: variables
           }
     };
 
 // Make the HTTP Api request
-function fetchData() {
+function searchData(queryd) {
     return axios(url, options)
       .then(handleResponse);
   }
@@ -82,4 +82,4 @@ function fetchData() {
   }
 
 
-module.exports = fetchData();
+module.exports = searchData();

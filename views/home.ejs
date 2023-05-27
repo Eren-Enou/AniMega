@@ -1,9 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content=
+        "width=device-width, 
+        initial-scale=1.0">
   <title>AniMega Home</title>
   <link rel="stylesheet" href="/public/css/style.css">
+  <script src="../public/js/main.js"></script>
 </head>
 <body>
   <header>
@@ -19,9 +24,14 @@
   </nav>
 
   <main>
+    
+
+  
+
     <section>
       <h2>Featured Anime</h2>
         <div class="anime-card">
+          let media = '<%-media%>'
           <p>ID: <%= media.id %></p>
           <h2>Title</h2>
           <ul>
@@ -33,7 +43,10 @@
     </section>
     <section>
       <h2>Search Anime</h2>
-      <% include search-bar.ejs %> <!-- Include the search bar -->
+      <form action="/search" method="GET">
+        <input type="text" id="searchInput" name="query" placeholder="Search anime by name">
+        <button type="submit">Search</button>
+      </form>
     </section>
   </main>
 
