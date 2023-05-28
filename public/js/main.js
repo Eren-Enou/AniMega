@@ -1,3 +1,29 @@
+var searchQuery = `
+query SearchAnimeName($search: String) {
+    Page(page:1, perPage:5){
+        media(search: $search, type: ANIME) {
+      title {
+        english
+        native
+      }
+    }
+    }
+  }
+`;
+
+var url = 'https://graphql.anilist.co',
+            options = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                data: {
+                    query: searchQuery,
+                    variables: variables
+                  }
+            };
+
 document.addEventListener('DOMContentLoaded', function() {
     // Get the search form element
     const searchForm = document.getElementById('searchForm');
@@ -21,41 +47,15 @@ document.addEventListener('DOMContentLoaded', function() {
         // Your API request logic goes here
         console.log('Search Term:', searchTerm);
         // Perform your API request using the searchTerm variable
-        // ...
-    }
-});
+        // Define our query variables and values that will be used in the query request
+        variables = {
+            search: searchTerm
+        };
 
-var searchQuery = `
-query SearchAnimeName($search: String) {
-    Page(page:1, perPage:5){
-        media(search: $search, type: ANIME) {
-      title {
-        english
-        native
-      }
-    }
-    }
-  }
-`;
-
-// Define our query variables and values that will be used in the query request
-var variables = {
-    search: searchTerm
-};
-
-// Define the config we'll need for our Api request
-var url = 'https://graphql.anilist.co',
-    options = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-        },
-        data: {
-            query: searchQuery,
-            variables: variables
-          }
-    };
+        // Define the config we'll need for our Api request
+  
+            }
+        });
 
 // Make the HTTP Api request
 function searchData() {

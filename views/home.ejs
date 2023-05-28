@@ -7,8 +7,9 @@
         "width=device-width, 
         initial-scale=1.0">
   <title>AniMega Home</title>
-  <link rel="stylesheet" href="/public/css/style.css">
-  <script src="../public/js/main.js"></script>
+  <link rel="stylesheet" type="text/css"  href="/css/style.css">
+  
+  <script src="/js/main.js"></script>
 </head>
 <body>
   <header>
@@ -42,14 +43,13 @@
         </div>
     </section>
     <section>
-      <h2>Search Anime</h2>
-      <form action="/search" method="GET">
-        <input type="text" id="searchInput" name="query" placeholder="Search anime by name">
-        <button type="submit">Search</button>
-      </form>
+      <h2>Search Anime For : Me</h2>
+      <%- include('./partials/search-bar'); %>
     </section>
   </main>
-
+  <script src="/js/getSearchResults.js"></script>
+  <script src="/js/searchBarAPI.js"></script>
+  <script src="/js/client.js"></script>
   <footer>
     <p>&copy; 2023 AniMega. All rights reserved.</p>
   </footer>

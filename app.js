@@ -1,18 +1,25 @@
 // Set express as Node.js web application 
-// server framework. 
+// server framework imports
 const express = require('express');
 const app = express();
+const port = 3000;
 
+//API imports
 const fetchData = require('./public/js/fetchData');
 const searchData = require('./public/js/searchData');
 
-const port = 3000;
+
 
 // Set EJS as templating engine 
+app.set('views','./views');
 app.set('view engine', 'ejs'); // Set EJS as the view engine
 
 // Middleware setup
 app.use(express.json()); // Parse JSON request bodies
+app.use(express.static('public'));
+app.use ('/css', express.static(__dirname + 'public/css'));
+app.use ('/js', express.static(__dirname + 'public/js'));
+app.use ('/img', express.static(__dirname + 'public/img'));
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded request bodies
 
 // Define routes
@@ -20,12 +27,12 @@ app.use(express.urlencoded({ extended: true })); // Parse URL-encoded request bo
 app.get('/', (req, res) => {
   fetchData
   .then((data) => {
-    const media = data.data.Media;DDDDDDDDDDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADDDDDDDDDDDDDDDDDDEA
+    const media = data.data.Media;
     res.render('home', { media });
   })
   .catch((error) => {
     console.error('Error fetching data:', error);
-    res.render('error'); // Render an error page or handle the error case appropriately
+    res.render('error', errorMessage=error); // Render an error page or handle the error case appropriately
   })
 });
 
@@ -52,8 +59,6 @@ app.get('/users/:id', (req, res) => {
 });
 
 
-app.use(express.static('public'));
-  
 
 // Start the server
 

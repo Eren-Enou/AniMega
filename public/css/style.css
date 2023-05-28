@@ -1,0 +1,20 @@
+body {
+  color: aqua;
+}
+
+#searchResults {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  #searchResults li {
+    cursor: pointer;
+    padding: 5px;
+    background-color: #f1f1f1;
+  }
+  
+  #searchResults li:hover {
+    background-color: #e0e0e0;
+  }
+  

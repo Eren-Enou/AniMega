@@ -67,7 +67,7 @@ var url = 'https://graphql.anilist.co',
     };
 
 // Make the HTTP Api request
-function searchData(queryd) {
+function searchData() {
     return axios(url, options)
       .then(handleResponse);
   }
