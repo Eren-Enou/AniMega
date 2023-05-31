@@ -1,5 +1,5 @@
 const searchInput = document.getElementById('searchInput');
-const searchResults = document.getElementById('searchResults');
+const searchResults = document.getElementById('resultsContainer');
 
 // const getSearchResults = require('./public/js/getSearchResults');
 

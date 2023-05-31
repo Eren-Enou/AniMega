@@ -1,0 +1,29 @@
+<!-- scrollBox.ejs -->
+
+<div class="scroll-box">
+    <div class="scroll-content">
+      <% images.forEach(function(image) { %>
+        <img src="<%= image.url %>" alt="<%= image.alt %>" />
+      <% }); %>
+    </div>
+  </div>
+  
+  <style>
+  .scroll-box {
+    width: 300px;
+    height: 200px;
+    overflow-x: scroll;
+    white-space: nowrap;
+  }
+  
+  .scroll-content {
+    display: inline-block;
+  }
+  
+  .scroll-content img {
+    width: 100px;
+    height: 100px;
+    margin-right: 10px;
+  }
+  </style>
+  

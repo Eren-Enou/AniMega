@@ -1,67 +1,55 @@
-// Set express as Node.js web application 
-// server framework imports
 const express = require('express');
+const fetchData = require('./public/js/fetchData.js');
+const path = require('path');
+
 const app = express();
 const port = 3000;
 
-//API imports
-const fetchData = require('./public/js/fetchData');
-const searchData = require('./public/js/searchData');
-
-
-
-// Set EJS as templating engine 
-app.set('views','./views');
-app.set('view engine', 'ejs'); // Set EJS as the view engine
+// Set EJS as the templating engine
+app.set('views', 'views');
+app.set('view engine', 'ejs');
 
 // Middleware setup
-app.use(express.json()); // Parse JSON request bodies
-app.use(express.static('public'));
-app.use ('/css', express.static(__dirname + 'public/css'));
-app.use ('/js', express.static(__dirname + 'public/js'));
-app.use ('/img', express.static(__dirname + 'public/img'));
-app.use(express.urlencoded({ extended: true })); // Parse URL-encoded request bodies
+app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/css', express.static(path.join(__dirname, 'public/css')));
+app.use('/js', express.static(path.join(__dirname, 'public/js')));
+app.use('/img', express.static(path.join(__dirname, 'public/img')));
+app.use(express.urlencoded({ extended: true }));
+
+// Search function
+async function performSearch(searchTerm) {
+  try {
+    const data = await fetchData(searchTerm);
+    return data.data.Page;
+  } catch (error) {
+    console.error(error);
+    throw new Error('An error occurred while fetching data.');
+  }
+}
+
+app.get('/js/fetchData.js', (req, res) => {
+  res.set('Content-Type', 'text/javascript');
+  res.sendFile(path.join(__dirname, 'public', 'js', 'fetchData.js'));
+});
 
 // Define routes
-//Home
+// Home route
 app.get('/', (req, res) => {
-  fetchData
-  .then((data) => {
-    const media = data.data.Media;
-    res.render('home', { media });
-  })
-  .catch((error) => {
-    console.error('Error fetching data:', error);
-    res.render('error', errorMessage=error); // Render an error page or handle the error case appropriately
-  })
+  const searchTerm = req.query.query || ''; // Access the query parameter 'query' from the form
+  performSearch(searchTerm)
+    .then(searchResults => {
+      res.render('home', { search: searchResults });
+    })
+    .catch(error => {
+      console.error(error);
+      res.status(500).json({ error: 'An error occurred' });
+    });
 });
-
-//Search
-app.get('/search', (req, res) => {
-  const searchQuery = req.query.query;
-  searchData
-  .then((data) => {
-    const media = data.data.Page.media;
-    console.log(media);
-    res.render('search-results', { query: searchQuery, media: media });
-  })
-});
-
-//About
-app.get('/about', (req, res) => {
-  res.send('About page');
-});
-
-//Users
-app.get('/users/:id', (req, res) => {
-  const userId = req.params.id;
-  res.send(`User ID: ${userId}`);
-});
-
-
 
 // Start the server
-
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+module.exports = app;

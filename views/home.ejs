@@ -8,8 +8,6 @@
         initial-scale=1.0">
   <title>AniMega Home</title>
   <link rel="stylesheet" type="text/css"  href="/css/style.css">
-  
-  <script src="/js/main.js"></script>
 </head>
 <body>
   <header>
@@ -25,30 +23,17 @@
   </nav>
 
   <main>
-    
-
-  
-
     <section>
       <h2>Featured Anime</h2>
-        <div class="anime-card">
-          let media = '<%-media%>'
-          <p>ID: <%= media.id %></p>
-          <h2>Title</h2>
-          <ul>
-            <li>Romaji: <%= media.title.romaji %></li>
-            <li>English: <%= media.title.english %></li>
-            <li>Native: <%= media.title.native %></li>
-          </ul>
-        </div>
+      <div class="anime-card">
+        <!-- Add your featured anime content here -->
+      </div>
     </section>
     <section>
-      <h2>Search Anime For : Me</h2>
-      <%- include('./partials/search-bar'); %>
+      <h2>Search Anime:</h2>
+      <% include('./partials/search-bar'); %>
     </section>
   </main>
-  <script src="/js/getSearchResults.js"></script>
-  <script src="/js/searchBarAPI.js"></script>
   <script src="/js/client.js"></script>
   <footer>
     <p>&copy; 2023 AniMega. All rights reserved.</p>

@@ -1,44 +1,46 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Get the search form element
-    const searchForm = document.getElementById('searchForm');
+  const searchInput = document.getElementById('searchInput');
+  const resultsContainer = document.getElementById('resultsContainer');
 
-    // Add event listener to form submit event
-    searchForm.addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent default form submission behavior
+  searchInput.addEventListener('input', function() {
+    const searchTerm = searchInput.value;
+    fetchData(searchTerm)
+      .then(data => {
+        displayResults(data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  });
 
-        // Get the search input element
-        const searchInput = document.getElementById('searchInput');
+  function displayResults(data) {
+    // Clear previous results
+    resultsContainer.innerHTML = '';
 
-        // Get the search term value
-        const searchTerm = searchInput.value;
+    const results = data.Page.media;
 
-        // Pass the search term to your API request function or further processing logic
-        makeAPIRequest(searchTerm);
-    });
+    if (results.length === 0) {
+      // No results found
+      const noResultsElement = document.createElement('p');
+      noResultsElement.textContent = 'No results found.';
+      resultsContainer.appendChild(noResultsElement);
+    } else {
+      // Display each result in a dropdown item
+      results.forEach(result => {
+        const title = result.title.english || result.title.native;
 
-    // Function to make the API request
-    function makeAPIRequest(searchTerm) {
-        // Your API request logic goes here
-        console.log('Search Term:', searchTerm);
-        // Perform your API request using the searchTerm variable
-        // You can use AJAX or fetch API to make the request
-        // Example using fetch API
-        fetch('/api/search', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-            },
-            body: JSON.stringify({ searchTerm: searchTerm })
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Handle the response data
-            console.log(data);
-        })
-        .catch(error => {
-            // Handle errors
-            console.error(error);
+        const dropdownItem = document.createElement('div');
+        dropdownItem.classList.add('dropdown-item');
+        dropdownItem.textContent = title;
+
+        // Add click event listener to the dropdown item
+        dropdownItem.addEventListener('click', function() {
+          // Perform action when the item is clicked, e.g., navigate to a details page
+          console.log('Clicked:', title);
         });
+
+        resultsContainer.appendChild(dropdownItem);
+      });
     }
+  }
 });
