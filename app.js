@@ -27,10 +27,17 @@ async function performSearch(searchTerm) {
     throw new Error('An error occurred while fetching data.');
   }
 }
-
-app.get('/js/fetchData.js', (req, res) => {
-  res.set('Content-Type', 'text/javascript');
-  res.sendFile(path.join(__dirname, 'public', 'js', 'fetchData.js'));
+// API endpoint for fetching data
+app.get('/api/fetchData', (req, res) => {
+  const searchTerm = req.query.searchTerm || ''; // Get the search term from the query parameters
+  fetchData(searchTerm)
+    .then(data => {
+      res.json(data);
+    })
+    .catch(error => {
+      console.error(error);
+      res.status(500).json({ error: 'An error occurred' });
+    });
 });
 
 // Define routes

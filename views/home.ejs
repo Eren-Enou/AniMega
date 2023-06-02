@@ -27,16 +27,18 @@
       <h2>Featured Anime</h2>
       <div class="anime-card">
         <!-- Add your featured anime content here -->
+        <%- include('./partials/anime-rotation') %>
       </div>
     </section>
     <section>
       <h2>Search Anime:</h2>
-      <% include('./partials/search-bar'); %>
+      <%- include('./partials/search-bar') %>
     </section>
   </main>
-  <script src="/js/client.js"></script>
   <footer>
     <p>&copy; 2023 AniMega. All rights reserved.</p>
   </footer>
+  <script src="/js/client.js"></script>
+  <script src="/js/animeRotation.js"></script>
 </body>
 </html>

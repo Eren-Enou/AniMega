@@ -1,14 +1,4 @@
 <form id="searchForm" action="/search" method="GET">
   <input id="searchInput" type="text" name="query" placeholder="Search anime...">
-  <div id="resultsContainer">
-    <% if (search && search.length > 0) { %>
-      <% search.forEach(result => { %>
-        <div class="result-item">
-          <span><%= result.title.english || result.title.native %></span>
-        </div>
-      <% }); %>
-    <% } else { %>
-      <p>No results found.</p>
-    <% } %>
-  </div>
+  <div id="resultsContainer"></div>
 </form>
