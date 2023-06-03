@@ -18,9 +18,8 @@ searchInput.addEventListener('input', function () {
 function displayResults(data) {
   // Clear previous results
   resultsContainer.innerHTML = '';
-  
-  const results = data.data.Page.media;
-  console.log(results);
+
+  const results = data;
 
   if (results.length === 0) {
     // No results found
@@ -30,14 +29,12 @@ function displayResults(data) {
   } else {
     // Create dropdown menu container
     const dropdownMenu = document.createElement('div');
-    dropdownMenu.classList.add('dropdown-menu');
 
     // Create dropdown items for each result
     results.forEach(result => {
-      const title = result.title.english || result.title.native;
+      const title = result.title.english || result.title.romaji;
 
       const dropdownItem = document.createElement('div');
-      dropdownItem.classList.add('dropdown-item');
       dropdownItem.textContent = title;
 
       // Add click event listener to the dropdown item
@@ -51,6 +48,7 @@ function displayResults(data) {
 
     // Append the dropdown menu to the results container
     resultsContainer.appendChild(dropdownMenu);
+    console.log(resultsContainer);
   }
 }
 

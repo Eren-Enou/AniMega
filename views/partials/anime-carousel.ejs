@@ -1,0 +1,14 @@
+<!-- _carousel.ejs -->
+
+<section>
+  <h2>Airing Anime:</h2>
+  <% if (airingAnime.length === 0) { %>
+    <p>No airing anime found.</p>
+  <% } else { %>
+    <ul>
+      <% airingAnime.forEach(anime => { %>
+        <li><%= anime.title.english || anime.title.romaji %></li>
+      <% }); %>
+    </ul>
+  <% } %>
+</section>

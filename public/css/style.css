@@ -1,6 +1,8 @@
 body {
   color: aqua;
+  background-color: pink;
 }
+
 
 #searchInput {
   width: 300px;
@@ -24,3 +26,8 @@ body {
     background-color: #e0e0e0;
   }
   
+
+h1 {
+  font-size: large;
+  color: pink;
+}
