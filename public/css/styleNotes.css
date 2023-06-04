@@ -1,0 +1,46 @@
+/* parallax scrollig */
+
+.carousel {
+    width: 100%;
+    overflow: hidden;
+  }
+  
+  .carousel-container {
+    height: 350px;
+    display: flex;
+    overflow: auto;
+    scroll-behavior: smooth;
+  }
+  
+  .carousel-list {
+    display: flex;
+  }
+  
+  .carousel-item {
+    flex: 0 0 auto;
+    margin-right: 16px;
+  }
+  
+  .carousel-item:last-child {
+    margin-right: 0;
+  }
+  
+  .carousel-item a {
+    display: block;
+  }
+  
+  .carousel-item img {
+    width: 100%;
+    height: auto;
+  }
+  
+  
+  
+  
+  .carousel-item:last-child {
+    margin-right: 0;
+  }
+  
+  .carousel .carousel-container .carousel-list .carousel-item {
+    display: block;
+  }

@@ -1,14 +1,30 @@
 <!-- _carousel.ejs -->
 
-<section>
-  <h2>Airing Anime:</h2>
+<section class="anime-carousel">
+  <h2>Airing Anime for Spring 2023:</h2>
   <% if (airingAnime.length === 0) { %>
     <p>No airing anime found.</p>
   <% } else { %>
-    <ul>
-      <% airingAnime.forEach(anime => { %>
-        <li><%= anime.title.english || anime.title.romaji %></li>
-      <% }); %>
-    </ul>
+    <div class="anime-carousel-container">
+      <button class="carousel-btn carousel-btn-prev">&lt;</button>
+      <div class="anime-carousel-list">
+        <% airingAnime.forEach(anime => { %>
+          <div class="anime-carousel-item">
+            <% if (anime.trailer) { %>
+              <a href="<%='https://www.' +  anime.trailer.site + '.com/watch?v=' + anime.trailer.id %>" target="_blank">
+            <% } %>
+              <img src="<%= anime.coverImage.large %>" alt="<%= anime.title.english || anime.title.romaji %>">
+              <div class="title-overlay">
+                <%= anime.title.english || anime.title.romaji %>
+              </div>
+            <% if (anime.trailer) { %>
+              </a>
+            <% } %>
+          </div>
+        <% }); %>
+      </div>
+      <button class="carousel-btn carousel-btn-next">&gt;</button>
+    </div>
   <% } %>
 </section>
+

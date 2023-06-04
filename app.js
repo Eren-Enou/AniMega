@@ -60,6 +60,7 @@ app.get('/', async (req, res) => {
     const airingAnimeMedia = await airingAnime();
     const searchResults = await performSearch(searchTerm);
     console.log(airingAnimeMedia);
+    console.log(searchResults); // Add this line
     res.render('home', { search: searchResults, airingAnime: airingAnimeMedia });
   } catch (error) {
     console.error(error);

@@ -41,7 +41,7 @@ async function fetchData(searchTerm) {
 async function getAiringAnime() {
   const airingQuery = `
   query airingAnime {
-    Page(page: 1, perPage: 10) {
+    Page(page: 1, perPage: 100) {
       media(
         status: RELEASING
         type: ANIME
@@ -58,6 +58,7 @@ async function getAiringAnime() {
         }
         coverImage {
           large
+          medium
         }
         trailer {
           id
