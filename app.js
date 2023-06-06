@@ -1,9 +1,9 @@
 const express = require('express');
 const path = require('path');
+const ejs = require('ejs');
 
 
 const { searchData, getAiringAnime, queryMediaID } = require('./public/js/fetchData.js');
-const trendingAnime = require('./public/js/animeRotation.js');
 
 const app = express();
 const port = 3000;
@@ -66,13 +66,12 @@ app.get('/api/fetchData', (req, res) => {
 
 // Define routes
 // Home route
-app.get('/', async (req, res) => {
+app.get('/home', async (req, res) => {
   const searchTerm = req.query.query || ''; // Access the query parameter 'query' from the form
   try {
     const airingAnimeMedia = await airingAnime();
     const searchResults = await performSearch(searchTerm);
-    console.log(airingAnimeMedia);
-    console.log(searchResults); // Add this line
+
     res.render('home', { search: searchResults, airingAnime: airingAnimeMedia });
   } catch (error) {
     console.error(error);
@@ -82,12 +81,13 @@ app.get('/', async (req, res) => {
 
 // Route to open a new webpage based on mediaID
 app.get('/media/:id', async (req, res) => {
-  const mediaID = req.params.mediaID;
-  console.log(mediaID);
+  const mediaID = req.params.id;
   try {
     const mediaData = await searchMediaID(mediaID);
-    // Render the webpage and pass the mediaData to the template
-    res.render('bio-page', { media: mediaData });
+    console.log(mediaData);
+    const modifiedDescription = mediaData.description.replace(/<br>/g, '\n').replace(/<\/?i>/g, '');
+    // Render the webpage and pass the modified mediaData to the template
+    res.render('bio-page', { media: { ...mediaData, description: modifiedDescription } });
   } catch(error) {
     if (error.response) {
       // Access the response object in the error

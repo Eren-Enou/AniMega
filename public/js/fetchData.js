@@ -5,6 +5,9 @@ async function queryMediaID(mediaID) {
   query($id:Int) {
     Media(id: $id) {
       bannerImage
+      coverImage{
+        medium
+      }
       title {
         romaji
         english
@@ -143,7 +146,7 @@ async function queryMediaID(mediaID) {
     const response = await axios('https://graphql.anilist.co', options);
     const data = handleResponse(response);
     console.log(data);
-    return data;
+    return data.data.Media;
   } catch (error) {
     console.error(error);
     throw new Error('An error occurred while fetching Media query data.');
