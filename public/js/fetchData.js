@@ -1,6 +1,157 @@
 const axios = require('axios');
 
-async function fetchData(searchTerm) {
+async function queryMediaID(mediaID) {
+  const mediaIDQuery = `
+  query($id:Int) {
+    Media(id: $id) {
+      bannerImage
+      title {
+        romaji
+        english
+        native
+      }
+      description
+      episodes
+      duration
+      status
+      startDate {
+        year
+        month
+        day
+      }
+      endDate {
+        year
+        month
+        day
+      }
+      season
+      averageScore
+      studios(isMain: true) {
+        nodes {
+          name
+        }
+      }
+      relations {
+        edges {
+          relationType(version: 2)
+          node {
+            id
+            title {
+              romaji
+            }
+          }
+        }
+      }
+      streamingEpisodes {
+        title
+        thumbnail
+        url
+        site
+      }
+      genres
+      tags {
+        name
+      }
+      externalLinks {
+        site
+        url
+      }
+      trailer {
+        id
+        site
+      }
+      recommendations {
+        edges {
+          node {
+            mediaRecommendation {
+              id
+              title {
+                romaji
+              }
+            }
+          }
+        }
+      }
+      staff {
+        edges {
+          node {
+            id
+            name {
+              full
+            }
+            languageV2
+          }
+        }
+      }
+      characters {
+        edges {
+          node {
+            id
+            name {
+              full
+            }
+            image {
+              medium
+            }
+          }
+        }
+      }
+      reviews {
+        edges {
+          node {
+            id
+            summary
+            body
+            rating
+            user {
+              id
+              name
+            }
+          }
+        }
+      }
+      stats {
+        scoreDistribution {
+          score
+          amount
+        }
+        statusDistribution {
+          status
+          amount
+        }
+      }
+    }
+  }
+`;
+
+  const variables = {
+    id: mediaID
+  };
+  const options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    },
+    data: {
+      query: mediaIDQuery,
+      variables: variables
+    }
+  };
+
+  try {
+    const response = await axios('https://graphql.anilist.co', options);
+    const data = handleResponse(response);
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error('An error occurred while fetching Media query data.');
+  }
+}
+
+
+async function searchData(searchTerm) {
   const searchQuery = `
     query SearchAnimeName($search: String) {
       Page(page: 1, perPage: 5) {
@@ -34,7 +185,7 @@ async function fetchData(searchTerm) {
     return data.data.Page.media;
   } catch (error) {
     console.error(error);
-    throw new Error('An error occurred while fetching data.');
+    throw new Error('An error occurred while fetching search data.');
   }
 }
 
@@ -89,7 +240,7 @@ async function getAiringAnime() {
     return data.data.Page.media;
   } catch (error) {
     console.error(error);
-    throw new Error('An error occurred while fetching data.');
+    throw new Error('An error occurred while fetching airing data.');
   }
 }
 
@@ -102,6 +253,7 @@ function handleResponse(response) {
 }
 
 module.exports = {
-  fetchData,
-  getAiringAnime
+  searchData,
+  getAiringAnime,
+  queryMediaID
 };

@@ -10,6 +10,7 @@ $(document).ready(function() {
     var currentPosition = 0;
     var maxPosition = (totalItems - visibleItems) * itemWidth;
     var scrollingInterval;
+    const animeCarouselItems = document.querySelectorAll('.anime-carousel-item');
   
     function startScrolling() {
       scrollingInterval = setInterval(function() {
@@ -54,5 +55,20 @@ $(document).ready(function() {
     });
   
     startScrolling(); // Start automatic scrolling initially
+
+    // Attach click event listener to each anime carousel item
+    animeCarouselItems.forEach(item => {
+    item.addEventListener('click', () => {
+      // Retrieve the data-id attribute value
+      const dataId = item.getAttribute('data-id');
+      console.log(dataId); // Output: The value of data-id attribute for the clicked item
+  
+      // Perform any additional actions with the retrieved data-id value
+      window.location.href = `/media/${dataId}`;
+    });
+  });
   });
   
+
+
+

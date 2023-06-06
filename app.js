@@ -1,6 +1,8 @@
 const express = require('express');
 const path = require('path');
-const { fetchData, getAiringAnime } = require('./public/js/fetchData.js');
+
+
+const { searchData, getAiringAnime, queryMediaID } = require('./public/js/fetchData.js');
 const trendingAnime = require('./public/js/animeRotation.js');
 
 const app = express();
@@ -22,11 +24,11 @@ app.use(express.urlencoded({ extended: true }));
 // Search function
 async function performSearch(searchTerm) {
   try {
-    const data = await fetchData(searchTerm);
+    const data = await searchData(searchTerm);
     return data;
   } catch (error) {
     console.error(error);
-    throw new Error('An error occurred while fetching data.');
+    throw new Error('An error occurred while fetching search data.');
   }
 }
 
@@ -36,13 +38,23 @@ async function airingAnime() {
     return data;
   } catch (error) {
     console.error(error);
-    throw new Error('An error occurred while fetching data.');
+    throw new Error('An error occurred while fetching airing data.');
+  }
+}
+
+async function searchMediaID(mediaID) {
+  try {
+    const data = await queryMediaID(mediaID);
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error('An error occurred while fetching media ID data.');
   }
 }
 // API endpoint for searching data
 app.get('/api/fetchData', (req, res) => {
   const searchTerm = req.query.searchTerm || ''; // Get the search term from the query parameters
-  fetchData(searchTerm)
+  searchData(searchTerm)
     .then(data => {
       res.json(data);
     })
@@ -67,6 +79,24 @@ app.get('/', async (req, res) => {
     res.status(500).json({ error: 'An error occurred' });
   }
 });
+
+// Route to open a new webpage based on mediaID
+app.get('/media/:id', async (req, res) => {
+  const mediaID = req.params.mediaID;
+  console.log(mediaID);
+  try {
+    const mediaData = await searchMediaID(mediaID);
+    // Render the webpage and pass the mediaData to the template
+    res.render('bio-page', { media: mediaData });
+  } catch(error) {
+    if (error.response) {
+      // Access the response object in the error
+      console.log(error.response);
+    } else {
+      // Handle other types of errors
+      console.log('Error:', error.message);
+    }
+}});
 
 // Start the server
 app.listen(port, () => {

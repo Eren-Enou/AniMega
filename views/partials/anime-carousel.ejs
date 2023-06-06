@@ -9,10 +9,7 @@
       <button class="carousel-btn carousel-btn-prev">&lt;</button>
       <div class="anime-carousel-list">
         <% airingAnime.forEach(anime => { %>
-          <div class="anime-carousel-item">
-            <% if (anime.trailer) { %>
-              <a href="<%='https://www.' +  anime.trailer.site + '.com/watch?v=' + anime.trailer.id %>" target="_blank">
-            <% } %>
+          <div class="anime-carousel-item" data-id="<%= anime.id %>">
               <img src="<%= anime.coverImage.large %>" alt="<%= anime.title.english || anime.title.romaji %>">
               <div class="title-overlay">
                 <%= anime.title.english || anime.title.romaji %>
@@ -27,4 +24,3 @@
     </div>
   <% } %>
 </section>
-

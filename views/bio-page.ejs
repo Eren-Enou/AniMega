@@ -1,0 +1,96 @@
+<%- include('./partials/head') %>
+<body>
+    <%- include('./partials/header') %>
+    <%- include('./partials/nav-bar') %>
+    
+    <main>
+        <div class="banner">
+          <img src="<%= media.bannerImage %>" alt="Banner Image">
+          <h1><%= media.title.romaji %></h1>
+        </div>
+      
+        <div class="synopsis">
+          <h2>Synopsis</h2>
+          <p><%= media.description %></p>
+          <button class="read-more">Read More</button>
+        </div>
+      
+        <div class="left-side">
+          <div class="details">
+            <h2>Details</h2>
+            <ul>
+              <li>Episodes: <%= media.episodes %></li>
+              <li>Duration: <%= media.duration %> minutes</li>
+              <li>Status: <%= media.status %></li>
+              <li>Start Date: <%= media.startDate.year %>/<%= media.startDate.month %>/<%= media.startDate.day %></li>
+              <li>End Date: <%= media.endDate.year %>/<%= media.endDate.month %>/<%= media.endDate.day %></li>
+              <li>Season: <%= media.season %></li>
+              <li>Average Score: <%= media.averageScore %></li>
+            </ul>
+          </div>
+      
+          <div class="additional-details">
+            <h2>Additional Details</h2>
+            <ul>
+              <li>Studios: <%= media.studios.nodes[0].name %></li>
+              <li>Genres: <%= media.genres.join(', ') %></li>
+              <li>Tags:
+                <% media.tags.nodes.forEach(function(tag) { %>
+                  <%= tag.name %>
+                <% }); %>
+              </li>
+            </ul>
+          </div>
+      
+          <div class="external-links">
+            <h2>External Links</h2>
+            <ul>
+              <% media.externalLinks.forEach(function(link) { %>
+                <li><a href="<%= link.url %>"><%= link.site %></a></li>
+              <% }); %>
+            </ul>
+          </div>
+        </div>
+      
+        <div class="right-side">
+          <div class="overview">
+            <h2>Overview</h2>
+            <!-- Overview content -->
+          </div>
+      
+          <div class="watch">
+            <h2>Watch</h2>
+            <!-- Watch content -->
+          </div>
+      
+          <div class="characters">
+            <h2>Characters</h2>
+            <!-- Characters content -->
+          </div>
+      
+          <div class="staff">
+            <h2>Staff</h2>
+            <!-- Staff content -->
+          </div>
+      
+          <div class="reviews">
+            <h2>Reviews</h2>
+            <!-- Reviews content -->
+          </div>
+      
+          <div class="stats">
+            <h2>Stats</h2>
+            <!-- Stats content -->
+          </div>
+      
+          <div class="social-media">
+            <h2>Social Media</h2>
+            <!-- Social media content -->
+          </div>
+        </div>
+      </main>
+      
+    
+    <%- include('./partials/footer') %>
+</body>
+</html>
