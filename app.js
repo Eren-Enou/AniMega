@@ -6,7 +6,7 @@ const ejs = require('ejs');
 const { searchData, getAiringAnime, queryMediaID } = require('./public/js/fetchData.js');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 
 // Set EJS as the templating engine
