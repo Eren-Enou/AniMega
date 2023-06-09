@@ -159,6 +159,7 @@ async function searchData(searchTerm) {
     query SearchAnimeName($search: String) {
       Page(page: 1, perPage: 5) {
         media(search: $search, type: ANIME, sort:POPULARITY_DESC) {
+          id
           title {
             english
             romaji

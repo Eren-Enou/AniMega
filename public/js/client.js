@@ -41,6 +41,7 @@ function displayResults(data) {
       dropdownItem.addEventListener('click', function() {
         // Perform action when the item is clicked, e.g., navigate to a details page
         console.log('Clicked:', title);
+        window.location.href = `/media/${result.id}`;
       });
 
       dropdownMenu.appendChild(dropdownItem);

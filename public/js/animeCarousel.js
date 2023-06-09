@@ -18,7 +18,7 @@ $(document).ready(function() {
         if (currentPosition < -maxPosition) {
           currentPosition = 0;
         }
-        carouselList.animate({ scrollLeft: -currentPosition + 'px' }, 'slow');
+        carouselList.animate({ scrollLeft: -currentPosition + 'px' }, 2000);
       }, 2000);
     }
   
@@ -41,7 +41,7 @@ $(document).ready(function() {
       if (currentPosition > 0) {
         currentPosition = -maxPosition;
       }
-      carouselList.animate({ scrollLeft: -currentPosition + 'px' }, 'slow');
+      carouselList.animate({ scrollLeft: -currentPosition + 'px' },  2000);
       stopScrolling(); // Stop automatic scrolling on manual button click
     });
   
@@ -50,7 +50,7 @@ $(document).ready(function() {
       if (currentPosition < -maxPosition) {
         currentPosition = 0;
       }
-      carouselList.animate({ scrollLeft: -currentPosition + 'px' }, 'slow');
+      carouselList.animate({ scrollLeft: -currentPosition + 'px' },  2000);
       stopScrolling(); // Stop automatic scrolling on manual button click
     });
   

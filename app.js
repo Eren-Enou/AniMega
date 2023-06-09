@@ -6,7 +6,7 @@ const ejs = require('ejs');
 const { searchData, getAiringAnime, queryMediaID } = require('./public/js/fetchData.js');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 80;
 
 
 // Set EJS as the templating engine
@@ -97,6 +97,11 @@ app.get('/media/:id', async (req, res) => {
       console.log('Error:', error.message);
     }
 }});
+
+// Route for '/' leading to '/home'
+app.get('/', (req, res) => {
+  res.redirect('/home');
+});
 
 // Start the server
 app.listen(port, () => {
