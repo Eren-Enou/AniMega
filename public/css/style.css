@@ -426,3 +426,12 @@ p {
 .anime-dropdown-item:hover {
   background-color: #f2f2f2;
 }
+
+
+.banner {
+  background-position: 50% 35%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 400px;
+  margin-top: -58px;
+}

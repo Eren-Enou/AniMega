@@ -1,5 +1,7 @@
 // indexRoutes.js
 const express = require('express');
+const cheerio = require('cheerio');
+
 const router = express.Router();
 const { searchData, getAiringAnime, queryMediaID } = require('../public/js/fetchData.js');
 
@@ -27,11 +29,19 @@ async function airingAnime() {
 async function searchMediaID(mediaID) {
   try {
     const data = await queryMediaID(mediaID);
+    const description = extractTextFromHTML(data.description);
+    data.description = description;
     return data;
   } catch (error) {
     console.error(error);
     throw new Error('An error occurred while fetching media ID data.');
   }
+}
+
+// Helper function to convert HTML to readable text using cheerio
+function extractTextFromHTML(html) {
+  const $ = cheerio.load(html);
+  return $.text();
 }
 
 // Home route

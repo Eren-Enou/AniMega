@@ -1,4 +1,4 @@
-<%- include('./partials/head') %>
+<%- include('./partials/bio-head') %>
 <body>
     <%- include('./partials/nav-bar') %>
     
@@ -16,17 +16,20 @@
                     <div class="container" style="min-height: 250px;">
                         <div class="cover-wrap overlap-banner">
                             <div class="cover-wrap-inner" style="position: static;">
-                                <img src="<%= media.coverImage.medium %>" alt="Cover Image">
+                                <img src="<%= media.coverImage.large %>" alt="Cover Image">
                                 <div class="actions">
 
                                 </div>
                             </div>
                         </div>
                         <div class="content">
-                            <h1><%= media.title.romaji %></h1>
-                            <p class="description"><%= media.description %></p>
+                          <h1><%= media.title.romaji %></h1>
+                          <p class="description" id="description"><%= media.description %></p>
+                          <div class="button-container">
                             <span class="description-length-toggle">Read More</span>
+                          </div>
                         </div>
+                        
                     </div>
                 </div> 
             </div>
@@ -75,7 +78,7 @@
         <div class="right-side">
             <div class="overview">
               <h2>Overview</h2>
-              <p><%= media.description %></p>
+              
               <!-- Additional overview content -->
             </div>
           
@@ -99,20 +102,21 @@
             </div>
           
             <div class="characters">
-              <h2>Characters</h2>
-              <% if (media.characters && media.characters.edges.length > 0) { %>
-                <ul>
-                  <% media.characters.edges.forEach(function(character) { %>
-                    <li>
-                      <img src="<%= character.node.image.medium %>" alt="<%= character.node.name.full %>">
-                      <%= character.node.name.full %>
-                    </li>
-                  <% }); %>
-                </ul>
-              <% } else { %>
-                <p>No characters available.</p>
-              <% } %>
-              <!-- Additional characters content -->
+              <div class="grid-wrap">
+                <h2>Characters</h2>
+                <% if (media.characters && media.characters.edges.length > 0) { %>
+                  <ul>
+                    <% media.characters.edges.forEach(function(character) { %>
+                      <li class="role-card">
+                        <img src="<%= character.node.image.medium %>" alt="<%= character.node.name.full %>">
+                        <span><%= character.node.name.full %></span>
+                      </li>
+                    <% }); %>
+                  </ul>
+                <% } else { %>
+                  <p>No characters available.</p>
+                <% } %>
+              </div>
             </div>
           
             <div class="staff">
@@ -170,7 +174,7 @@
         </main>
           
       
-    
+    <script src="/js/bioPage.js"></script>
     <%- include('./partials/footer') %>
 </body>
 </html>

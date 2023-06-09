@@ -7,13 +7,14 @@ async function queryMediaID(mediaID) {
       bannerImage
       coverImage{
         medium
+        large
       }
       title {
         romaji
         english
         native
       }
-      description
+      description (asHtml:true)
       episodes
       duration
       status
