@@ -3,16 +3,16 @@
   <%- include('./partials/nav-bar') %>
 
   <main>
+
+    <section>
+      <%- include('./partials/search-bar') %>
+    </section>
     <section>
       <div class="anime-card">
         <%- include('./partials/anime-carousel') %>
       </div>
     </section>
-    <section>
-      <h2>Search Anime:</h2>
-      <%- include('./partials/search-bar') %>
-      <%- include('./partials/search-results') %>
-    </section>
+    
   </main>
   <%- include('./partials/footer') %>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

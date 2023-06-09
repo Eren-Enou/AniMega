@@ -1,4 +1,4 @@
-<div class="nav nav-unscoped transparent" style="top:0px">
+<div class="nav nav-unscoped transparent" style="transition: background 0.8s ease 0s, top 0.5s ease 0s;">
   <div class="wrap">
     <a href="/home" class="logo">
       <img src="/img/icons/AMicon.png" alt="AniMEGA icon">
@@ -11,3 +11,21 @@
     </div>
   </div>
 </div>
+
+<script>
+  let prevScrollPos = window.pageYOffset;
+
+  window.onscroll = function() {
+    const currentScrollPos = window.pageYOffset;
+
+    if (prevScrollPos > currentScrollPos) {
+      // User is scrolling up, show the navbar
+      document.querySelector('.nav').classList.remove('nav-hidden');
+    } else {
+      // User is scrolling down, hide the navbar
+      document.querySelector('.nav').classList.add('nav-hidden');
+    }
+
+    prevScrollPos = currentScrollPos;
+  };
+</script>
