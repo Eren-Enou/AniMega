@@ -9,6 +9,14 @@
       <a href="/user/animelist" class="link">anime list</a>
       <span class="browse-wrap"><a href="/search/anime" class="link"></a></span>
     </div>
+    <div class="user">
+      <% if (user) { %>
+        <span class="username"><%= user.username %></span>
+      <% } else { %>
+        <a href="/login" class="link">Login</a>
+        <a href="/signup" class="link">Signup</a>
+      <% } %>
+    </div>
   </div>
 </div>
 

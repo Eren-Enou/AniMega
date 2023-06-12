@@ -5,6 +5,16 @@ const cheerio = require('cheerio');
 const router = express.Router();
 const { searchData, getAiringAnime, queryMediaID } = require('../public/js/fetchData.js');
 
+// Custom middleware to set the user property in req.session
+const setUserMiddleware = (req, res, next) => {
+  req.user = req.session.user || null; // Set user to null if not logged in
+  next();
+};
+
+// Apply the middleware to relevant routes
+router.use(['/home', '/user', '/media/:id'], setUserMiddleware);
+
+
 // Search function
 async function performSearch(searchTerm) {
   try {
@@ -46,27 +56,39 @@ function extractTextFromHTML(html) {
 
 // Home route
 router.get('/home', async (req, res) => {
-  const searchTerm = req.query.query || ''; // Access the query parameter 'query' from the form
+  const searchTerm = req.query.query || '';
   try {
     const airingAnimeMedia = await airingAnime();
     const searchResults = await performSearch(searchTerm);
 
-    res.render('home', { search: searchResults, airingAnime: airingAnimeMedia });
+    console.log(req.user); // Access the user property from req object
+
+    res.render('home', { search: searchResults, airingAnime: airingAnimeMedia, user: req.user });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'An error occurred' });
+    res.status(500).json({ error: 'An error occurred with user' });
   }
 });
+
+router.get('/user/', async (req, res) => {
+  
+  const user = req.user;
+  
+  // Render the profile page and pass the user object to the template
+  res.render('user', { user: user });
+});
+
 
 // Route to open a new webpage based on mediaID
 router.get('/media/:id', async (req, res) => {
   const mediaID = req.params.id;
   try {
     const mediaData = await searchMediaID(mediaID);
+    
     console.log(mediaData);
     const modifiedDescription = mediaData.description.replace(/<br>/g, '\n').replace(/<\/?i>/g, '');
     // Render the webpage and pass the modified mediaData to the template
-    res.render('bio-page', { media: { ...mediaData, description: modifiedDescription } });
+    res.render('bio-page', { media: { ...mediaData, description: modifiedDescription }, user: req.user });
   } catch (error) {
     if (error.response) {
       // Access the response object in the error

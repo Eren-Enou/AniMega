@@ -4,9 +4,7 @@ const router = express.Router();
 const mysql = require('mysql');
 const bcrypt = require('bcrypt');
 
-require('dotenv').config();
 
-const secretKey = process.env.SECRET_KEY;
 
 // Create a MySQL connection pool
 const pool = mysql.createPool({
@@ -16,14 +14,6 @@ const pool = mysql.createPool({
   database: 'animega',
 });
 
-// Configure session middleware
-router.use(
-    session({
-      secret: secretKey,
-      resave: false,
-      saveUninitialized: false
-    })
-  );
 
 // Connect to the database
 pool.getConnection((error, connection) => {
@@ -89,7 +79,7 @@ router.post('/login', (req, res) => {
   
         if (results.length === 0) {
           // User not found  
-          return res.redirect('/login?error=Invalid%20username%20or%20password');
+          return res.redirect('/login?error=' + encodeURIComponent('Invalid username or password'));
         }
   
         const user = results[0];
@@ -102,12 +92,18 @@ router.post('/login', (req, res) => {
   
           if (!isMatch) {
             // Incorrect password
-            return res.redirect('/login?error=Invalid%20username%20or%20password');
+            return res.redirect('/login?error=' + encodeURIComponent('Invalid username or password'));
           }
   
           // Login successful
-          req.session.userId = user.id; // Store the user's ID in the session
-          return res.redirect('/home');
+          req.session.user = user;// Store the user in the session
+          return req.session.save((err) => {
+            if (err) {
+              console.error(err);
+              return res.status(500).json({ error: 'An error occurred' });
+            }
+            return res.redirect('/home');
+          });
         });
       });
     });
@@ -117,7 +113,7 @@ router.post('/login', (req, res) => {
 
 router.get('/signup', (req, res) => {
   try {
-    res.render('signup');
+    res.render('signup', {user:''});
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred' });
@@ -127,7 +123,7 @@ router.get('/signup', (req, res) => {
 router.get('/login', (req, res) => {
     try {
       const errorMessage = req.query.error;
-      res.render('login', { errorMessage: errorMessage || '' });
+      res.render('login', {user: req.session.user, errorMessage: errorMessage || '' });
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'An error occurred' });

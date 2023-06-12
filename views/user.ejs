@@ -1,0 +1,17 @@
+<%- include('./partials/signup-head') %>
+
+<body>
+  <%- include('./partials/nav-bar') %>
+  <h1>User Profile</h1>
+  <% if (user) { %>
+    <div class="user-profile">
+      <h2>Welcome, <%= user.username %>!</h2>
+      <p>Email: <%= user.email %></p>
+      <p>Joined: <%= user.joined %></p>
+      <!-- Add more user information as needed -->
+    </div>
+  <% } else { %>
+    <p>Please <a href="/login">login</a> or <a href="/signup">signup</a> to access your profile.</p>
+  <% } %>
+</body>
+</html>
