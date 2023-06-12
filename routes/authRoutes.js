@@ -1,55 +1,128 @@
-// // authRoutes.js
-// const express = require('express');
-// const router = express.Router();
-// const { MongoClient } = require('mongodb');
+const express = require('express');
+const router = express.Router();
+const mysql = require('mysql');
+const bcrypt = require('bcrypt');
 
-// const url = 'mongodb://localhost:27017'; // MongoDB connection URL
-// const dbName = 'myDatabase'; // Name of your database
+// Create a MySQL connection pool
+const pool = mysql.createPool({
+  host: 'localhost',
+  user: 'root',
+  password: 'password',
+  database: 'animega',
+});
 
-// MongoClient.connect(
-//   url,
-//   { useNewUrlParser: true, useUnifiedTopology: true },
-//   (err, client) => {
-//     if (err) {
-//       console.error('Error connecting to the database', err);
-//       return;
-//     }
-//     console.log('Connected to the database');
-//     const db = client.db(dbName);
-//     // Additional setup goes here
+// Connect to the database
+pool.getConnection((error, connection) => {
+  if (error) {
+    console.error('Error connecting to the database: ' + error.stack);
+    return;
+  }
+  console.log('Connected to the database as ID ' + connection.threadId);
+});
+
+router.post('/signup', (req, res) => {
+  const { username, email, password } = req.body;
+
+  bcrypt.hash(password, 10, (err, hashedPassword) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: 'An error occurred' });
+    }
+
+    const user = {
+      username: username,
+      email: email,
+      password: hashedPassword,
+    };
+
+    pool.getConnection((err, connection) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ error: 'An error occurred' });
+      }
+
+      connection.query('INSERT INTO users SET ?', user, (err, results) => {
+        connection.release(); // Release the connection
+
+        if (err) {
+          console.error(err);
+          return res.status(500).json({ error: 'An error occurred' });
+        }
+
+        res.status(200).json({ message: 'User registered successfully' });
+      });
+    });
+  });
+});
+
+router.post('/login', (req, res) => {
+    const { username, password } = req.body;
+    
+    pool.getConnection((err, connection) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ error: 'An error occurred' });
+      }
+      
+      connection.query('SELECT * FROM users WHERE username = ?', [username], (err, results) => {
+        connection.release(); // Release the connection
+        
+        if (err) {
+          console.error(err);
+          return res.status(500).json({ error: 'An error occurred' });
+        }
+        
+        if (results.length === 0) {
+          // User not found
+          return res.status(401).json({ error: 'Invalid username or password' });
+        }
+        
+        const user = results[0];
+        
+        bcrypt.compare(password, user.password, (err, isMatch) => {
+          if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'An error occurred' });
+          }
+          
+          if (!isMatch) {
+            // Incorrect password
+            return res.status(401).json({ error: 'Invalid username or password' });
+          }
+          
+          // Login successful
+          res.status(200).json({ message: 'Login successful' });
+        });
+      });
+    });
+  });
+  
+
+router.get('/signup', (req, res) => {
+  try {
+    res.render('signup');
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred' });
+  }
+});
+
+router.get('/login', (req, res) => {
+  try {
+    res.render('login');
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred' });
+  }
+});
+
+// // Close the database connection
+// pool.end((error) => {
+//   if (error) {
+//     console.error('Error closing the connection: ' + error.stack);
+//     return;
 //   }
-// );
-
-// router.post('/signup', (req, res) => {
-//   const user = {
-//     email: req.body.email,
-//     password: req.body.password,
-//   };
-//   // Save the user to the database
-//   db.collection('users').insertOne(user, (err, result) => {
-//     if (err) {
-//       console.error('Error saving user to database', err);
-//       res.status(500).send('Error signing up');
-//     } else {
-//       res.send('Signup successful');
-//     }
-//   });
+//   console.log('Connection closed successfully.');
 // });
 
-// router.post('/login', (req, res) => {
-//   const email = req.body.email;
-//   const password = req.body.password;
-//   // Check if the user exists in the database
-//   db.collection('users').findOne({ email, password }, (err, user) => {
-//     if (err) {
-//       console.error('Error finding user in database', err);
-//       res.status(500).send('Error logging in');
-//     } else if (!user) {
-//       res.status(401).send('Invalid email or password');
-//     } else {
-//       res.send('Login successful');
-//     }
-//   });
-// });
-
-// module.exports = router;
+module.exports = router;

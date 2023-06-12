@@ -25,7 +25,7 @@ const indexRoutes = require('./routes/indexRoutes');
 // Use the route files
 app.use('/api', searchRoutes);
 app.use('/', indexRoutes);
-// app.use('/', authRoutes); Need to work on MongoDB, crashing
+app.use('/', authRoutes); 
 
 // Start the server
 app.listen(port, () => {
