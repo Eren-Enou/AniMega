@@ -5,7 +5,7 @@ const ejs = require('ejs');
 const session = require('express-session');
 require('dotenv').config();
 
-const secretKey = process.env.SECRET_KEY;
+const secretKey = process.env.SECRET_KEY || 'MySuperSecretKey123!@#';
 const app = express();
 const port = process.env.PORT || 80;
 
