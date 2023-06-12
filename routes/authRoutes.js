@@ -1,7 +1,12 @@
 const express = require('express');
+const session = require('express-session');
 const router = express.Router();
 const mysql = require('mysql');
 const bcrypt = require('bcrypt');
+
+require('dotenv').config();
+
+const secretKey = process.env.SECRET_KEY;
 
 // Create a MySQL connection pool
 const pool = mysql.createPool({
@@ -10,6 +15,15 @@ const pool = mysql.createPool({
   password: 'password',
   database: 'animega',
 });
+
+// Configure session middleware
+router.use(
+    session({
+      secret: secretKey,
+      resave: false,
+      saveUninitialized: false
+    })
+  );
 
 // Connect to the database
 pool.getConnection((error, connection) => {
@@ -20,6 +34,7 @@ pool.getConnection((error, connection) => {
   console.log('Connected to the database as ID ' + connection.threadId);
 });
 
+//Signup Code
 router.post('/signup', (req, res) => {
   const { username, email, password } = req.body;
 
@@ -57,45 +72,47 @@ router.post('/signup', (req, res) => {
 
 router.post('/login', (req, res) => {
     const { username, password } = req.body;
-    
+    const error = req.query.error
     pool.getConnection((err, connection) => {
       if (err) {
         console.error(err);
         return res.status(500).json({ error: 'An error occurred' });
       }
-      
+  
       connection.query('SELECT * FROM users WHERE username = ?', [username], (err, results) => {
         connection.release(); // Release the connection
-        
+  
         if (err) {
           console.error(err);
           return res.status(500).json({ error: 'An error occurred' });
         }
-        
+  
         if (results.length === 0) {
-          // User not found
-          return res.status(401).json({ error: 'Invalid username or password' });
+          // User not found  
+          return res.redirect('/login?error=Invalid%20username%20or%20password');
         }
-        
+  
         const user = results[0];
-        
+  
         bcrypt.compare(password, user.password, (err, isMatch) => {
           if (err) {
             console.error(err);
             return res.status(500).json({ error: 'An error occurred' });
           }
-          
+  
           if (!isMatch) {
             // Incorrect password
-            return res.status(401).json({ error: 'Invalid username or password' });
+            return res.redirect('/login?error=Invalid%20username%20or%20password');
           }
-          
+  
           // Login successful
-          res.status(200).json({ message: 'Login successful' });
+          req.session.userId = user.id; // Store the user's ID in the session
+          return res.redirect('/home');
         });
       });
     });
   });
+  
   
 
 router.get('/signup', (req, res) => {
@@ -108,13 +125,14 @@ router.get('/signup', (req, res) => {
 });
 
 router.get('/login', (req, res) => {
-  try {
-    res.render('login');
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'An error occurred' });
-  }
-});
+    try {
+      const errorMessage = req.query.error;
+      res.render('login', { errorMessage: errorMessage || '' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'An error occurred' });
+    }
+  });
 
 // // Close the database connection
 // pool.end((error) => {
