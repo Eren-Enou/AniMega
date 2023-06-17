@@ -27,9 +27,3 @@ searchInput.addEventListener('input', function(event) {
   });
 });
 
-// Function to simulate fetching search results from API
-// function getSearchResults(searchTerm) {
-//   // This can be replaced with an actual API call to retrieve search results
-//   const mockResults = ['Result 1', 'Result 2', 'Result 3', 'Result 4', 'Result 5'];
-//   return mockResults.filter(result => result.toLowerCase().includes(searchTerm.toLowerCase()));
-// }

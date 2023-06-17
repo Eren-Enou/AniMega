@@ -1,3 +1,5 @@
+//Work in progress code
+
 $(document).ready(function() {
     var carousel = $('.anime-carousel-container');
     var carouselList = $('.anime-carousel-list');

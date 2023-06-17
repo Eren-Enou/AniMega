@@ -1,3 +1,5 @@
+//Practicing search code
+
 var searchQuery = `
 query SearchAnimeName($search: String) {
     Page(page:1, perPage:5){

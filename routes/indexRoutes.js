@@ -1,21 +1,21 @@
-// indexRoutes.js
-const express = require('express');
-const cheerio = require('cheerio');
+// import modules
+const express = require('express'); //creating web server
+const cheerio = require('cheerio'); //parsing/manipulating html
+
 
 const router = express.Router();
 const { searchData, getAiringAnime, queryMediaID } = require('../public/js/fetchData.js');
+const setUserMiddleware = require('../middleware/setUser.js');
 
-// Custom middleware to set the user property in req.session
-const setUserMiddleware = (req, res, next) => {
-  req.user = req.session.user || null; // Set user to null if not logged in
-  next();
-};
+//Set middleware
+router.use(setUserMiddleware);
 
 // Apply the middleware to relevant routes
 router.use(['/home', '/user', '/media/:id'], setUserMiddleware);
 
 
-// Search function
+
+// Helper search term function 
 async function performSearch(searchTerm) {
   try {
     const data = await searchData(searchTerm);
@@ -26,6 +26,7 @@ async function performSearch(searchTerm) {
   }
 }
 
+//Helper search airing anime function
 async function airingAnime() {
   try {
     const data = await getAiringAnime();
@@ -36,6 +37,7 @@ async function airingAnime() {
   }
 }
 
+//Helper search media ID function
 async function searchMediaID(mediaID) {
   try {
     const data = await queryMediaID(mediaID);
@@ -61,16 +63,16 @@ router.get('/home', async (req, res) => {
     const airingAnimeMedia = await airingAnime();
     const searchResults = await performSearch(searchTerm);
 
-    console.log(req.user); // Access the user property from req object
-
-    res.render('home', { search: searchResults, airingAnime: airingAnimeMedia, user: req.user });
+    //render home with Search, AiringAnime, User passed in
+    res.render('home', { search: searchResults, airingAnime: airingAnimeMedia, user: req.user }); 
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred with user' });
   }
 });
 
-router.get('/user/', async (req, res) => {
+//User Route
+router.get('/user/', async  (req, res) => {
   
   const user = req.user;
   
@@ -84,11 +86,12 @@ router.get('/media/:id', async (req, res) => {
   const mediaID = req.params.id;
   try {
     const mediaData = await searchMediaID(mediaID);
-    
+    const user = req.user;
     console.log(mediaData);
-    const modifiedDescription = mediaData.description.replace(/<br>/g, '\n').replace(/<\/?i>/g, '');
+    const modifiedDescription = extractTextFromHTML(mediaData.description);
+    
     // Render the webpage and pass the modified mediaData to the template
-    res.render('bio-page', { media: { ...mediaData, description: modifiedDescription }, user: req.user });
+    res.render('bio-page', { media: { ...mediaData, description: modifiedDescription }, user: user });
   } catch (error) {
     if (error.response) {
       // Access the response object in the error

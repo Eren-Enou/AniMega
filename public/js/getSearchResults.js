@@ -1,3 +1,5 @@
+//Practicing search code
+
 function getSearchResults(searchTerm) {
     var searchQuery = `
       query SearchAnimeName($search: String) {

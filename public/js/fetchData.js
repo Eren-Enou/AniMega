@@ -1,6 +1,8 @@
 const axios = require('axios');
 
+// Function to query media details based on the media ID
 async function queryMediaID(mediaID) {
+  // GraphQL query to fetch media details
   const mediaIDQuery = `
   query($id:Int) {
     Media(id: $id) {
@@ -154,8 +156,9 @@ async function queryMediaID(mediaID) {
   }
 }
 
-
+// Function to perform a search for anime based on the search term
 async function searchData(searchTerm) {
+  // GraphQL query to search for anime by name
   const searchQuery = `
     query SearchAnimeName($search: String) {
       Page(page: 1, perPage: 5) {
@@ -194,7 +197,9 @@ async function searchData(searchTerm) {
   }
 }
 
+// Function to get a list of airing anime
 async function getAiringAnime() {
+  // GraphQL query to fetch airing anime
   const airingQuery = `
   query airingAnime {
     Page(page: 1, perPage: 100) {
@@ -249,6 +254,7 @@ async function getAiringAnime() {
   }
 }
 
+// Function to handle the response from the API
 function handleResponse(response) {
   if (response.status >= 200 && response.status < 300) {
     return response.data;

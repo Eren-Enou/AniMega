@@ -1,0 +1,35 @@
+animega-0
+
+endpoint
+animega-0.cir5liljprsp.us-west-1.rds.amazonaws.com
+
+port
+5432
+
+username
+postgres	
+
+password
+password
+
+VPC
+vpc-058283357f1b773ab
+
+
+psql -h animega-0.cir5liljprsp.us-west-1.rds.amazonaws.com -U postgres -d animega
+
+
+my-db-instance
+initial_db
+postgres
+password
+my-db-instance.cir5liljprsp.us-west-1.rds.amazonaws.com
+
+psql -h my-db-instance.cir5liljprsp.us-west-1.rds.amazonaws.com -U postgres -d initial_db
+
+
+
+
+postgres
+password
+5433

@@ -3,7 +3,10 @@ const express = require('express');
 const path = require('path');
 const ejs = require('ejs');
 const session = require('express-session');
+// const setUserMiddleware = require('./middleware/setUser.js');
+//config
 require('dotenv').config();
+
 
 const secretKey = process.env.SECRET_KEY || 'MySuperSecretKey123!@#';
 const app = express();
@@ -20,6 +23,7 @@ app.use('/css', express.static(path.join(__dirname, 'public/css')));
 app.use('/js', express.static(path.join(__dirname, 'public/js')));
 app.use('/img', express.static(path.join(__dirname, 'public/img')));
 app.use(express.urlencoded({ extended: true }));
+// app.use(setUserMiddleware);
 
 app.use(session({
   secret: secretKey, // Add a secret key to sign the session ID cookie
@@ -41,5 +45,7 @@ app.use('/', authRoutes);
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+
 
 module.exports = app;

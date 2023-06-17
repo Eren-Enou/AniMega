@@ -1,13 +1,18 @@
-// Client-side JavaScript (client.js)
+// Client-side JavaScript
 
+// Get references to HTML elements
 const searchInput = document.getElementById('searchInput');
 const resultsContainer = document.getElementById('resultsContainer');
 
+// Add event listener to search input for capturing user input
 searchInput.addEventListener('input', function () {
   const searchTerm = searchInput.value;
+  
+  // Fetch data from the server using the provided search term
   fetch(`/api/fetchData?searchTerm=${encodeURIComponent(searchTerm)}`)
     .then(response => response.json())
     .then(data => {
+      // Display the fetched results
       displayResults(data);
     })
     .catch(error => {
@@ -15,6 +20,7 @@ searchInput.addEventListener('input', function () {
     });
 });
 
+// Function to display the search results on the web page
 function displayResults(data) {
   // Clear previous results
   resultsContainer.innerHTML = '';
