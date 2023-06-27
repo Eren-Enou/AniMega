@@ -35,42 +35,47 @@ pool.connect((err, client, release) => {
 
 
 
-// Signup Code POST request to '/signup'. It handles the user signup process, where the client is expected to send a request containing the user's username, email, and password.
 router.post('/signup', (req, res) => {
   const { username, email, password } = req.body;
+  const error = req.query.error;
 
-  //hashes password
-  bcrypt.hash(password, 10, (err, hashedPassword) => {
+  // Check if username or email already exists in the database
+  pool.query('SELECT * FROM users WHERE username = $1 OR email = $2', [username, email], (err, result) => {
     if (err) {
       console.error(err);
       return res.status(500).json({ error: 'An error occurred' });
     }
 
-    const user = {
-      username: username,
-      email: email,
-      password: hashedPassword,
-      created_date: new Date() // Add the current date and time as the "created_date" field
-    };
+    // If a user with the same username or email exists, return an error
+    if (result.rows.length > 0) {
+      return res.redirect('/signup?error=' + encodeURIComponent('Invalid username or email'));
+    }
 
-    pool.connect((err, client, release) => {
+    // Hashes the password
+    bcrypt.hash(password, 10, (err, hashedPassword) => {
       if (err) {
         console.error(err);
-        return res.status(500).json({ error: 'An error occurred1' });
+        return res.status(500).json({ error: 'An error occurred' });
       }
 
-      client.query('INSERT INTO users (username, email, password, created_date) VALUES ($1, $2, $3, $4)', [user.username, user.email, user.password, user.created_date], (err, results) => {
-        release(); // Release the client back to the pool
+      const user = {
+        username: username,
+        email: email,
+        password: hashedPassword,
+        created_date: new Date()
+      };
 
+      pool.query('INSERT INTO users (username, email, password, created_date) VALUES ($1, $2, $3, $4)', [user.username, user.email, user.password, user.created_date], (err, results) => {
         if (err) {
           console.error(err);
-          return res.status(500).json({ error: 'An error occurred2' });
+          return res.status(500).json({ error: 'An error occurred' });
         }
         return res.redirect('/');
       });
     });
   });
 });
+
 
 //POST request to '/signup'. It handles the user signup process, where the client is expected to send a request containing the user's username, email, and password.
 router.post('/login', (req, res) => {
@@ -127,7 +132,8 @@ router.post('/login', (req, res) => {
 //GET requests to '/signup' render the signup page
 router.get('/signup', (req, res) => {
   try {
-    res.render('signup', { user: '' });
+    const errorMessage = req.query.error;
+    res.render('signup', { user: '', errorMessage: errorMessage || '' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred' });

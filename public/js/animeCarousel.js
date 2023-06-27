@@ -1,76 +1,46 @@
-//Work in progress code
+document.addEventListener("DOMContentLoaded", function() {
+  var carousel = document.querySelector(".anime-carousel-list");
+  var prevBtn = document.querySelector(".carousel-btn-prev");
+  var nextBtn = document.querySelector(".carousel-btn-next");
 
-$(document).ready(function() {
-    var carousel = $('.anime-carousel-container');
-    var carouselList = $('.anime-carousel-list');
-    var carouselItems = $('.anime-carousel-item');
-    var carouselBtnPrev = $('.carousel-btn-prev');
-    var carouselBtnNext = $('.carousel-btn-next');
-    var itemWidth = carouselItems.first().outerWidth(true);
-    var visibleItems = Math.floor(carousel.width() / itemWidth);
-    var totalItems = carouselItems.length;
-    var currentPosition = 0;
-    var maxPosition = (totalItems - visibleItems) * itemWidth;
-    var scrollingInterval;
-    const animeCarouselItems = document.querySelectorAll('.anime-carousel-item');
+  var currentSlide = 0;
+  var totalSlides = document.querySelectorAll(".anime-carousel-item").length;
+
+  function updateSlide() {
+    var windowWidth = window.innerWidth;
+    var itemWidth = Math.min(250, windowWidth / 4); // Maximum of 250 or 25% of the window width
+    var visibleSlides = Math.floor(windowWidth / itemWidth); // Number of visible slides based on the window width
+    var carouselWidth = itemWidth * totalSlides;
+    var offset = -currentSlide * Math.abs(itemWidth) + "px";
+    carousel.style.width = carouselWidth + "px";
+    carousel.style.transform = "translateX(" + offset + ")";
+  }
   
-    function startScrolling() {
-      scrollingInterval = setInterval(function() {
-        currentPosition -= itemWidth;
-        if (currentPosition < -maxPosition) {
-          currentPosition = 0;
-        }
-        carouselList.animate({ scrollLeft: -currentPosition + 'px' }, 2000);
-      }, 2000);
+  
+  
+
+  function nextSlide() {
+    currentSlide = (currentSlide + 1) % totalSlides;
+    updateSlide();
+  }
+  
+
+  function prevSlide() {
+    currentSlide--;
+    if (currentSlide < 0) {
+      currentSlide = totalSlides - 1;
     }
-  
-    function stopScrolling() {
-      clearInterval(scrollingInterval);
-    }
-  
-    carousel.on('mouseenter', function() {
-      carouselList.css('overflow-x', 'auto');
-      stopScrolling();
-    });
-  
-    carousel.on('mouseleave', function() {
-      carouselList.css('overflow-x', 'scroll');
-      startScrolling();
-    });
-  
-    carouselBtnPrev.on('click', function() {
-      currentPosition += itemWidth;
-      if (currentPosition > 0) {
-        currentPosition = -maxPosition;
-      }
-      carouselList.animate({ scrollLeft: -currentPosition + 'px' },  2000);
-      stopScrolling(); // Stop automatic scrolling on manual button click
-    });
-  
-    carouselBtnNext.on('click', function() {
-      currentPosition -= itemWidth;
-      if (currentPosition < -maxPosition) {
-        currentPosition = 0;
-      }
-      carouselList.animate({ scrollLeft: -currentPosition + 'px' },  2000);
-      stopScrolling(); // Stop automatic scrolling on manual button click
-    });
-  
-    startScrolling(); // Start automatic scrolling initially
+    updateSlide();
+  }
 
-    // Attach click event listener to each anime carousel item
-    animeCarouselItems.forEach(item => {
-    item.addEventListener('click', () => {
-      // Retrieve the data-id attribute value
-      const dataId = item.getAttribute('data-id');
-      console.log(dataId); // Output: The value of data-id attribute for the clicked item
-  
-      // Perform any additional actions with the retrieved data-id value
-      window.location.href = `/media/${dataId}`;
-    });
+  prevBtn.addEventListener("click", prevSlide);
+  nextBtn.addEventListener("click", nextSlide);
+
+  // Update slide on window resize
+  window.addEventListener("resize", function() {
+    updateSlide();
   });
-  });
-  
 
-
-
+  // Initial slide update
+  updateSlide();
+});

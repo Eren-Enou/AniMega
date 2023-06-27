@@ -1,0 +1,109 @@
+
+/* CSS for anime carousel */
+.anime-carousel {
+    text-align: center;
+    margin: 20px 0 0 20px;
+  }
+  
+  .anime-carousel h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .anime-carousel-container {
+    overflow: hidden; 
+    white-space: nowrap; /* Prevent line breaks */
+  }
+  
+  .anime-carousel-list {
+    display: flex;
+    flex-wrap: nowrap;
+    transition: transform 0.6s ease-in-out;
+    overflow-x: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.5) transparent;
+  }
+  
+  .anime-carousel-list::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .anime-carousel-list::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+  }
+  
+  .anime-carousel-list::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  
+  .anime-carousel-item {
+    flex: 0 0 auto;
+    width: 250px; /* Set a fixed width for each item */
+  }
+  
+  .anime-carousel-item img {
+    max-width: 100%; /* Ensure images fit within their container */
+    height: auto;
+  }
+  
+  .anime-carousel-item {
+    position: relative;
+  }
+  
+  .anime-carousel-item .title-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 5px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    font-size: 14px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    word-wrap: break-word; /* Allow text to wrap */
+    max-height: 100%; /* Limit overlay height to the item's height */
+    overflow: scroll; /* Enable vertical scrolling if necessary */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+  }
+  
+  .anime-carousel-item:hover .title-overlay {
+    visibility: visible; /* Show title on hover */
+    opacity: 1;
+  }
+  
+  .carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background-color: transparent;
+    font-size: 24px;
+    color: #000;
+    cursor: pointer;
+    z-index: 2;
+  }
+  
+  .carousel-btn-prev {
+    left: 3%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .carousel-btn-next {
+    right: 3%;
+    transform: translate(50%, -50%);
+  }
+  
+  @media screen and (max-width: 768px) {
+    .anime-carousel-item {
+      width: 100%; /* Change width to 100% for smaller screens */
+      margin-right: 0;
+    }
+  }

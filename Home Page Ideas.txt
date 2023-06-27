@@ -1,0 +1,23 @@
+Home Page Ideas:
+
+`Not Logged in`
+<nav> Logo, Header, Login/Signup
+
+`Logged in`
+<nav> Logo, Header, User Portal
+
+Search bar, how should results be displayed?
+
+Browse drop down, Genres?
+
+Lists drop down, Favorites?
+
+Members drop down, ??
+
+Repeating scrolling image bar Top 10 this week
+
+Repeating scrolling image bar Trending
+
+Repeating scrolling image bar Popular among users
+
+Footer? About, Contact, FAQ, Socials.

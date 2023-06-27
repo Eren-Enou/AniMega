@@ -10,8 +10,6 @@ const setUserMiddleware = (req, res, next) => {
   // Attach currentUserId to the request object for further usage
   req.currentUserId = currentUserId;
 
-  //global currentUserId? Not sure yet
-  global.currentUserId = req.currentUserId;
   next();
 };
 

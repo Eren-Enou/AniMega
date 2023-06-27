@@ -3,6 +3,9 @@
 <body>
     <%- include('./partials/nav-bar') %>
   <h1>Sign Up</h1>  
+  <% if (errorMessage) { %>
+    <div class="error-message"><%= errorMessage %></div>
+  <% } %>
   <form action="/signup" method="POST">
     <div>
       <label for="username">Username:</label>

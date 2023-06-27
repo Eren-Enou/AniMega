@@ -6,7 +6,7 @@
     <p>No airing anime found.</p>
   <% } else { %>
     <div class="anime-carousel-container">
-      <button class="carousel-btn carousel-btn-prev">&lt;</button>
+      <button class="carousel-btn carousel-btn-prev" onclick="prev()">&lt;</button>
       <div class="anime-carousel-list">
         <% airingAnime.forEach(anime => { %>
           <div class="anime-carousel-item" data-id="<%= anime.id %>">
@@ -20,7 +20,9 @@
           </div>
         <% }); %>
       </div>
-      <button class="carousel-btn carousel-btn-next">&gt;</button>
+      <button class="carousel-btn carousel-btn-next" onclick="next()">&gt;</button>
     </div>
   <% } %>
+  <script src="/public/css/carousel.css"></script>
+  
 </section>
