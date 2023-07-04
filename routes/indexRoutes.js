@@ -62,6 +62,7 @@ router.get('/home', async (req, res) => {
   try {
     const airingAnimeMedia = await airingAnime();
     const searchResults = await performSearch(searchTerm);
+    console.log(req.user);
 
     //render home with Search, AiringAnime, User passed in
     res.render('home', { search: searchResults, airingAnime: airingAnimeMedia, user: req.user }); 
@@ -88,6 +89,7 @@ router.get('/media/:id', async (req, res) => {
     const mediaData = await searchMediaID(mediaID);
     const user = req.user;
     console.log(mediaData);
+    console.log(user);
     const modifiedDescription = extractTextFromHTML(mediaData.description);
     
     // Render the webpage and pass the modified mediaData to the template
