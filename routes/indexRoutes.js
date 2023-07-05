@@ -5,7 +5,9 @@ const cheerio = require('cheerio'); //parsing/manipulating html
 
 const router = express.Router();
 const { searchData, getAiringAnime, queryMediaID } = require('../public/js/fetchData.js');
+const sessionUtils = require('../public/js/sessionUtils');
 const setUserMiddleware = require('../middleware/setUser.js');
+
 
 //Set middleware
 router.use(setUserMiddleware);
@@ -74,11 +76,15 @@ router.get('/home', async (req, res) => {
 
 //User Route
 router.get('/user/', async  (req, res) => {
-  
-  const user = req.user;
-  
-  // Render the profile page and pass the user object to the template
-  res.render('user', { user: user });
+  const user = sessionUtils.getUserFromSession(req);
+  if (user) {
+    // User is logged in
+    // Render the profile page and pass the user object to the template
+    res.render('user', { user: user });
+  } else {
+    // User is not logged in
+    res.redirect('/login');
+  }
 });
 
 
@@ -87,7 +93,7 @@ router.get('/media/:id', async (req, res) => {
   const mediaID = req.params.id;
   try {
     const mediaData = await searchMediaID(mediaID);
-    const user = req.user;
+    const user = sessionUtils.getUserFromSession(req);
     console.log(mediaData);
     console.log(user);
     const modifiedDescription = extractTextFromHTML(mediaData.description);
@@ -109,5 +115,21 @@ router.get('/media/:id', async (req, res) => {
 router.get('/', (req, res) => {
   res.redirect('/home');
 });
+
+function requireAuthentication(req, res, next) {
+  if (req.session.user) {
+    // User is authenticated
+    next();
+  } else {
+    // User is not authenticated, redirect to login
+    res.redirect('/login');
+  }
+}
+
+// Usage:
+router.get('/home', requireAuthentication, (req, res) => {
+  // Handle the authenticated route
+});
+
 
 module.exports = router;

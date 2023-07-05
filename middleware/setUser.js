@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 // // Custom middleware to set the user property in req.session
 const setUserMiddleware = (req, res, next) => {
   req.user = req.session.user || null; // Set user to null if not logged in

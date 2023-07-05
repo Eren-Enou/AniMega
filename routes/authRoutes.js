@@ -5,6 +5,8 @@ const router = express.Router();
 const { Pool } = require('pg');
 const bcrypt = require('bcrypt');
 
+const sessionUtils = require('../public/js/sessionUtils');
+
 // Create a PostgreSQL connection pool on local host
 // const pool = new Pool({
 //   host: '127.0.0.1',
@@ -149,6 +151,13 @@ router.get('/login', (req, res) => {
     console.error(error);
     res.status(500).json({ error: 'An error occurred' });
   }
+});
+
+// Create a new route to handle the API request
+router.get('/api/user-anime-info/:animeId', (req, res) => {
+  const userId = sessionUtils.getUserFromSession(req).id;
+  const animeId = req.params.animeId; // Assuming you get the anime ID from the URL parameters
+  res.json({ userId, animeId }); // Return the data as JSON
 });
 
 module.exports = router;

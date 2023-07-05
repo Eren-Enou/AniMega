@@ -25,12 +25,12 @@ fetch('/api/favorites', {
     console.log('Anime added to favorites successfully!');
     // Do something after the anime is added to favorites
   } else {
-    console.log('Error adding anime to favorites:', response.status);
+    console.log('1 Error adding anime to favorites:', response.status);
     // Handle the error case appropriately
   }
 })
 .catch(error => {
-  console.log('Error adding anime to favorites:', error);
+  console.log('2 Error adding anime to favorites:', error);
   // Handle the error case appropriately
 });
 }
