@@ -35,10 +35,12 @@ app.use(session({
 const searchRoutes = require('./routes/searchRoutes');
 const authRoutes = require('./routes/authRoutes');
 const indexRoutes = require('./routes/indexRoutes');
+const favoriteRoutes = require('./routes/favoriteRoutes');
 const addToFavorites = require('./routes/addToFavorites');
 
 // Use the route files
 app.use('/api', searchRoutes);
+app.use('/api', favoriteRoutes);
 app.use('/api', addToFavorites);
 app.use('/', indexRoutes);
 app.use('/', authRoutes); 

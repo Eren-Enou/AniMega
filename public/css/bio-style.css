@@ -363,7 +363,14 @@ body {
     gap: 10px;
   }
   
+  #addToFavoritesBtn {
+    display: none;
+  }
   
+  #removeFromFavoritesBtn {
+    display: none;
+  }
+    
   
   :root {
     --color-background: 237,241,245;

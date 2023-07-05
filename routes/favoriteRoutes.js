@@ -15,11 +15,11 @@ const pool = new Pool({
 });
 
 // POST request to insert data into favorites table
-router.post('/favorites', (req, res) => {
-    const { userId, animeId } = req.body;
+router.post('/favorites/:userId/:animeId', (req, res) => {
+    const { userId, animeId } = req.params;
   
     //Insert query
-    pool.query('INSERT INTO favorites (user_id, anime_id) VALUES ($1, $2)', [userId, animeId], (err, result) => {
+    pool.query('INSERT INTO favorites (userid, animeid) VALUES ($1, $2)', [userId, animeId], (err, result) => {
       if (err) {
         console.error('Error inserting data into favorites table: ' + err.stack);
         res.status(500).json({ error: 'An error occurred' });
@@ -36,7 +36,7 @@ router.delete('/favorites/:userId/:animeId', (req, res) => {
     const { userId, animeId } = req.params;
   
     //Delete query
-    pool.query('DELETE FROM favorites WHERE user_id = $1 AND anime_id = $2', [userId, animeId], (err, result) => {
+    pool.query('DELETE FROM favorites WHERE userid = $1 AND animeid = $2', [userId, animeId], (err, result) => {
       if (err) {
         console.error('Error deleting data from favorites table: ' + err.stack);
         res.status(500).json({ error: 'An error occurred' });
@@ -53,7 +53,7 @@ router.get('/favorites/:userId/:animeId', (req, res) => {
     const { userId, animeId } = req.params;
   
     // Example query: SELECT * FROM favorites WHERE user_id = $1 AND anime_id = $2
-    pool.query('SELECT * FROM favorites WHERE user_id = $1 AND anime_id = $2', [userId, animeId], (err, result) => {
+    pool.query('SELECT * FROM favorites WHERE userid = $1 AND animeid = $2', [userId, animeId], (err, result) => {
       if (err) {
         console.error('Error querying favorites table: ' + err.stack);
         res.status(500).json({ error: 'An error occurred' });

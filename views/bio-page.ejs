@@ -19,7 +19,9 @@
                                 <img src="<%= media.coverImage.large %>" alt="Cover Image">
                                 <div class="actions">
                                   <% if (user) { %>
-                                    <button id="addFavoriteButton" data-user-id="<%= user.id %>">Add to Favorites</button>
+                                    <button id="addToFavoritesBtn">Add to Favorites</button>
+                                    <button id="removeFromFavoritesBtn">Remove from Favorites</button>
+
                                   <% } %>
                                 </div>
                                 
