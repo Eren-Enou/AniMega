@@ -42,14 +42,17 @@ router.get('/api/favorited-anime', (req, res) => {
   
     // Prepare the SQL query to fetch favorited anime by userId
     const query = {
-      text: 'SELECT animeid FROM favorites WHERE userid = $1',
+      text: 'SELECT animeid, animename FROM favorites WHERE userid = $1',
       values: [userId],
     };
   
     // Execute the query and handle the result
     pool.query(query)
       .then((result) => {
-        const favoritedAnime = result.rows.map((row) => row.animeid);
+        const favoritedAnime = result.rows.map((row) => ({
+          animeid: row.animeid,
+          animename: row.animename,
+        }));
         res.json(favoritedAnime);
       })
       .catch((error) => {
@@ -57,4 +60,5 @@ router.get('/api/favorited-anime', (req, res) => {
         res.status(500).json({ error: 'An error occurred while fetching favorited anime.' });
       });
   });
+  
   module.exports = router;
