@@ -153,11 +153,5 @@ router.get('/login', (req, res) => {
   }
 });
 
-// Create a new route to handle the API request
-router.get('/api/user-anime-info/:animeId', (req, res) => {
-  const userId = sessionUtils.getUserFromSession(req).id;
-  const animeId = req.params.animeId; // Assuming you get the anime ID from the URL parameters
-  res.json({ userId, animeId }); // Return the data as JSON
-});
 
 module.exports = router;

@@ -10,8 +10,15 @@
       <p>Joined: <%= user.joined %></p>
       <!-- Add more user information as needed -->
     </div>
+    <div class="favorites">
+      <h2>Favorited Anime</h2>
+      <ul id="favorited-anime">
+
+      </ul>
+    </div>
   <% } else { %>
     <p>Please <a href="/login">login</a> or <a href="/signup">signup</a> to access your profile.</p>
   <% } %>
+  <script src="/js/favoritesList.js"></script>
 </body>
 </html>
