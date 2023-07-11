@@ -1,3 +1,13 @@
+//UNUSED FILE
+/*
+First attempt at adding to favorites, 
+connect to express.router and PostgreSQL pool,
+POST request to favorites api
+SQL query to select all from favorites where user id and anime id match variables from req.body
+check if: rows.length is greater than 0 = the combination already exists in favorites,
+else, insert query with user id and anime id into favorites table.
+*/
+
 //import modules
 const express = require('express');
 const { Pool } = require('pg');
