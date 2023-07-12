@@ -1,3 +1,29 @@
+/*
+
+This code sets up a server-side application using Express.js for handling API requests related to user anime information and favorites. It utilizes PostgreSQL as the database and includes routes for retrieving user anime information, user information, and favorited anime.
+
+Here's an overview of what this code does:
+
+Import necessary modules, such as Express, session, and pg.
+Import session utility functions from an external file.
+Create a connection pool to the PostgreSQL database connected to AWS RDS.
+Connect to the database.
+Define a new route to handle an API request for retrieving user anime information based on the anime ID.
+Retrieve the user ID from the session and the anime ID from the URL parameters.
+Return the user ID and anime ID as JSON.
+Define a route for retrieving user information.
+Retrieve the user ID from the session.
+Return the user ID as JSON.
+Define a route for retrieving favorited anime.
+Retrieve the user ID from the query parameters.
+Prepare and execute an SQL query to fetch favorited anime based on the user ID.
+Handle the query result by transforming it into the desired JSON format and returning it.
+Handle potential errors during database queries and provide appropriate responses.
+Export the router for use in other parts of the application.
+This code aims to provide an API interface for retrieving user anime information, user information, and favorited anime from the PostgreSQL database.
+
+*/
+
 //import modules
 const express = require('express');
 const session = require('express-session');
