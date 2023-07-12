@@ -1,3 +1,38 @@
+/*
+
+This code includes functions related to fetching data from the AniList API using GraphQL and Axios. It provides functionality for querying media details based on the media ID, performing a search for anime by name, and getting a list of airing anime.
+
+Here's an overview of what this code does:
+
+Import the required modules, including axios for making HTTP requests.
+Define an async function named queryMediaID() to query media details based on the media ID.
+Declare a GraphQL query mediaIDQuery to fetch media details.
+Define the request options, including the request method, headers, and data.
+Make an asynchronous request using axios to the AniList API endpoint, passing the options.
+Handle the API response by calling the handleResponse() function.
+Log the data for testing purposes.
+Return the data.data.Media object from the response.
+Define an async function named searchData() to perform a search for anime based on the search term.
+Declare a GraphQL query searchQuery to search for anime by name.
+Define the request options, including the request method, headers, and data.
+Make an asynchronous request using axios to the AniList API endpoint, passing the options.
+Handle the API response by calling the handleResponse() function.
+Return the data.data.Page.media array from the response.
+Define an async function named getAiringAnime() to get a list of airing anime.
+Declare a GraphQL query airingQuery to fetch airing anime.
+Define the request options, including the request method, headers, and data.
+Make an asynchronous request using axios to the AniList API endpoint, passing the options.
+Handle the API response by calling the handleResponse() function.
+Return the data.data.Page.media array from the response.
+Define a function named handleResponse() to handle the response from the API.
+Check if the response status is within the success range (200-299).
+If successful, return the response data.
+If not successful, throw an error with the response status text.
+Export the searchData(), getAiringAnime(), and queryMediaID() functions.
+This code demonstrates how to fetch data from the AniList API using GraphQL and Axios, providing functions for searching anime, retrieving airing anime, and querying media details based on the media ID.
+
+*/
+
 const axios = require('axios');
 
 // Function to query media details based on the media ID
