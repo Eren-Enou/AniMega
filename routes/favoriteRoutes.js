@@ -1,3 +1,20 @@
+/*
+
+This code sets up a server-side application using Express.js for managing user favorites in an anime database. It uses a PostgreSQL database and integrates with AniList API for fetching anime data. Here's an overview of what this code does:
+
+Import necessary modules, such as Express and pg.
+Create an instance of the Express router.
+Create a connection pool to the PostgreSQL database.
+Define routes for handling POST, DELETE, and GET requests related to user favorites.
+The POST route inserts data into the favorites table by querying the AniList API to fetch the English or Romaji title of the anime. The retrieved data is then inserted into the favorites table using a prepared statement.
+The DELETE route removes data from the favorites table based on the specified user ID and anime ID.
+The GET route checks if a particular user ID and anime ID combination exists in the favorites table. If a match is found, it returns the existing data; otherwise, it indicates that the combination does not exist.
+The code handles potential errors and provides appropriate responses.
+Export the router for use in other parts of the application.
+This code aims to facilitate the management of user favorites in an anime application, including adding, deleting, and checking the existence of favorites.
+
+*/
+
 // Import modules
 const express = require('express');
 const { Pool } = require('pg');
