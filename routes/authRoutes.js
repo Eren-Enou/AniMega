@@ -1,3 +1,18 @@
+/*
+
+This code sets up a server-side application using Express.js for user authentication and signup functionality. It utilizes PostgreSQL as the database and bcrypt for password hashing. Here's an overview of what this code does:
+
+Import necessary modules, such as Express, session, and pg.
+Define a connection pool to the PostgreSQL database, either locally or on AWS RDS.
+Establish a connection to the database.
+Define a route for user signup, which checks if the username or email already exists in the database, hashes the password, and inserts the user information into the "users" table.
+Define a route for user login, which verifies the username, compares the hashed password, and stores the user in the session upon successful login.
+Define routes for rendering the signup and login pages, along with handling any error messages.
+Export the router for use in other parts of the application.
+This code aims to provide a secure user authentication and signup system for an application.
+
+*/
+
 //import modules
 const express = require('express');
 const session = require('express-session');
