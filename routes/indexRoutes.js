@@ -1,3 +1,26 @@
+/*
+
+This code sets up a server-side application using Express.js for a web server. It includes routes and helper functions for performing searches, retrieving airing anime data, and fetching media information based on a media ID. The code utilizes cheerio for parsing and manipulating HTML.
+
+Here's an overview of what this code does:
+
+Import necessary modules, such as Express and cheerio.
+Create an instance of the Express router.
+Import helper functions and middleware from external files.
+Set the middleware to be applied to relevant routes.
+Define helper functions for performing searches, retrieving airing anime data, and fetching media information.
+Create a helper function to convert HTML to readable text using cheerio.
+Define routes for the home page, user profile page, and media page.
+Handle the home route, which fetches search results and airing anime data, and renders the home page template with the search results, airing anime data, and user information.
+Handle the user profile route, which checks if the user is logged in and renders the profile page template with the user object.
+Handle the media page route, which fetches media information based on the media ID, modifies the description, and renders the bio-page template with the modified media data and user information.
+Define a redirect route from '/' to '/home'.
+Define a requireAuthentication middleware function to check if a user is authenticated and allow access to authenticated routes.
+Export the router for use in other parts of the application.
+This code aims to provide functionality for searching anime, displaying airing anime, rendering user profiles, and retrieving media information based on the media ID.
+
+*/
+
 // import modules
 const express = require('express'); //creating web server
 const cheerio = require('cheerio'); //parsing/manipulating html
