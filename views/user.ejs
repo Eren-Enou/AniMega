@@ -1,3 +1,5 @@
+<!-- Need user.joined, user.joined, user.bio.  -->
+
 <%- include('./partials/signup-head') %>
 
 <body>
@@ -8,7 +10,10 @@
       <h2>Welcome, <%= user.username %>!</h2>
       <p>Email: <%= user.email %></p>
       <p>Joined: <%= user.joined %></p>
-      <!-- Add more user information as needed -->
+      <div class="user-info">
+        <img src="<%= user.image %>" alt="User Image">
+        <p>Bio: <%= user.bio %></p>
+      </div>
     </div>
     <div class="favorites">
       <h2>Favorited Anime</h2>

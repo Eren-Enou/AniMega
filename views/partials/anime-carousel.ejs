@@ -1,7 +1,8 @@
 <!-- _carousel.ejs -->
+<div style="--color-text: #333; --color-text-light: #999;"></div>
 
 <section class="anime-carousel">
-  <h2>Airing Anime for Spring 2023:</h2>
+  <h2 class="white">Airing Anime for Summer 2023:</h2>
   <% if (airingAnime.length === 0) { %>
     <p>No airing anime found.</p>
   <% } else { %>
@@ -23,6 +24,7 @@
       <button class="carousel-btn carousel-btn-next" onclick="next()">&gt;</button>
     </div>
   <% } %>
-  <script src="/public/css/carousel.css"></script>
+  <link rel="stylesheet" href="/css/carousel.css">
+
   
 </section>

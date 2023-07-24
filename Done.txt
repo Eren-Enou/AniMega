@@ -1,0 +1,21 @@
+Set up a server-side application using Express.js for user authentication and signup functionality. It utilizes PostgreSQL as the database and bcrypt for password hashing.
+
+Set up a server-side application using Express.js for managing user favorites in an anime database. It uses a PostgreSQL database and integrates with AniList API for fetching anime data.
+
+sets up a server-side application using Express.js for a web server. It includes routes and helper functions for performing searches, retrieving airing anime data, and fetching media information based on a media ID. The code utilizes cheerio for parsing and manipulating HTML.
+
+sets up a server-side application using Express.js for handling API requests related to searching data. It includes a route for fetching data based on a search term using a helper function.
+
+sets up a server-side application using Express.js for handling API requests related to user anime information and favorites. It utilizes PostgreSQL as the database and includes routes for retrieving user anime information, user information, and favorited anime.
+
+Set up server-sided applications using Express.js for user authentication and signup functionality, utilizes PostgreSQL as the database and bcrypt for password hashing.
+for managing user favorites in an anime database. It uses a PostgreSQL database and integrates with AniList API for fetching anime data.
+a web server. It includes routes and helper functions for performing searches, retrieving airing anime data, and fetching media information based on a media ID. The code utilizes cheerio for parsing and manipulating HTML.
+handling API requests related to searching data. It includes a route for fetching data based on a search term using a helper function.
+handling API requests related to user anime information and favorites. It utilizes PostgreSQL as the database and includes routes for retrieving user anime information, user information, and favorited anime.
+
+the execution of JavaScript code related to a carousel functionality. It includes functions to update the carousel slide, navigate to the next slide, navigate to the previous slide, and handle window resize events.
+truncating and toggling the display of a long description text on a web page. It allows the user to initially see a shortened version of the text and provides a "Read More" button to expand and collapse the full text.
+ searching for anime titles and displaying the search results on a web page. It utilizes the Fetch API to send a request to the server and retrieve the search results based on the user's input.
+
+ functions related to fetching data from the AniList API using GraphQL and Axios. It provides functionality for querying media details based on the media ID, performing a search for anime by name, and getting a list of airing anime.

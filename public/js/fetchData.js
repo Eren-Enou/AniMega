@@ -35,7 +35,7 @@ This code demonstrates how to fetch data from the AniList API using GraphQL and 
 
 const axios = require('axios');
 
-// Function to query media details based on the media ID
+// Function to query media details based on the media ID for the bio page
 async function queryMediaID(mediaID) {
   // GraphQL query to fetch media details
   const mediaIDQuery = `
@@ -191,7 +191,7 @@ async function queryMediaID(mediaID) {
   }
 }
 
-// Function to perform a search for anime based on the search term
+// Function to perform a search for anime based on the search term for the home page
 async function searchData(searchTerm) {
   // GraphQL query to search for anime by name
   const searchQuery = `
@@ -232,7 +232,7 @@ async function searchData(searchTerm) {
   }
 }
 
-// Function to get a list of airing anime
+// Function to get a list of airing anime for current season
 async function getAiringAnime() {
   // GraphQL query to fetch airing anime
   const airingQuery = `
@@ -242,7 +242,7 @@ async function getAiringAnime() {
         status: RELEASING
         type: ANIME
         sort: TRENDING_DESC
-        season: SPRING
+        season: SUMMER
         seasonYear: 2023
         isAdult: false
         format:TV

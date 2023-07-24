@@ -127,3 +127,7 @@ main {
   }
   
 
+:root {
+  --color-text: #ffffff;
+  --color-text-light: #999;
+}
