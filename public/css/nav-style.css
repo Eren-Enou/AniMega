@@ -1,0 +1,47 @@
+/* Assuming you have some default styles already in your nav-style.css file */
+/* Add the following styles to align menu_right and menu_left horizontally */
+#menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  /* To make the ul inside menu_left display horizontally */
+  #menu_left ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  #menu_left {
+    display: inline-block;
+    float: left;
+  }
+
+  #menu_right {
+    color: #2e51a2;
+    display: inline-block;
+    float: right;
+    height: 34px;
+    position: relative;
+    text-align: right;
+  }
+
+  /* To horizontally space out the list items in menu_left */
+  #menu_left li {
+    margin-right: 10px;
+  }
+  
+  /* Optional: To style the searchInput and resultsContainer */
+  #searchInput {
+    width: 200px;
+    padding: 8px;
+    border: 1px solid #ccc;
+  }
+  
+  #resultsContainer {
+    display: none;
+    /* Add any styling you want for the search results container */
+  }
+  
