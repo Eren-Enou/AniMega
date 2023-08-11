@@ -13,6 +13,11 @@
             <%- include('./partials/anime-carousel') %>
           </div>
         </section>
+        <section class="widget-container-left">
+          <div class="user-reviews">
+            <%- include('./partials/anime-reviews') %>
+          </div>
+        </section>
 
       </div>
       <div class="right-column">
@@ -25,6 +30,14 @@
               <%- include('./partials/popular-anime') %>
             </div>
           </div>
+          <div class="widget popular-airing-anime right">
+            <div class="ranking-digest">
+              <div class="ranking-header">
+                <h2 class="h2_side">Most Popular Airing Anime</h2>
+              </div>
+              <%- include('./partials/popular-airing-anime') %>
+            </div>
+          </div>
         </section>
       </div>
 
@@ -35,5 +48,6 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="/js/client.js"></script>
   <script src="/js/animeCarousel.js"></script>
+  
 </body>
 </html>

@@ -27,7 +27,7 @@ const cheerio = require('cheerio'); //parsing/manipulating html
 
 
 const router = express.Router();
-const { searchData, getAiringAnime, queryMediaID, getPopularAnime } = require('../public/js/fetchData.js');
+const { searchData, getAiringAnime, queryMediaID, getPopularAnime, getPopularAiringAnime } = require('../public/js/fetchData.js');
 const sessionUtils = require('../public/js/sessionUtils');
 const setUserMiddleware = require('../middleware/setUser.js');
 
@@ -73,6 +73,18 @@ async function popularAnime() {
   }
 }
 
+async function popularAiringAnime() {
+  try {
+    const data = await getPopularAiringAnime();
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error('An error occurred while fetching popular data.');
+  }
+}
+
+
+
 //Helper search media ID function
 async function searchMediaID(mediaID) {
   try {
@@ -99,10 +111,11 @@ router.get('/home', async (req, res) => {
     const airingAnimeMedia = await airingAnime();
     const searchResults = await performSearch(searchTerm);
     const popularAnimeMedia = await popularAnime();
+    const popularAiringAnimeMedia = await popularAiringAnime();
     console.log(req.user);
 
     //render home with Search, AiringAnime, User passed in
-    res.render('home', { search: searchResults, airingAnime: airingAnimeMedia, popularAnime: popularAnimeMedia, user: req.user }); 
+    res.render('home', { search: searchResults, airingAnime: airingAnimeMedia, popularAnime: popularAnimeMedia,popularAiringAnime: popularAiringAnimeMedia, user: req.user }); 
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred with user' });

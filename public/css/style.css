@@ -395,3 +395,49 @@ p {
   width: 35%;
   float: right;
 }
+
+.rank {
+  color: gray;
+  display: table-cell;
+  font-family: Avenir,lucida grande,tahoma,verdana,arial,sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.0em;
+  vertical-align: top;
+  width: 24px;
+}
+
+.ranking-unit {
+  display: table;
+  padding: 0 8px 22px;
+  width: 286px;
+}
+
+.ranking-digest {
+  background-color: #f8f8f8;
+  margin-bottom: 20px;
+}
+
+.data-image {
+  display: table-cell;
+  width: 50px;
+}
+
+.ranking-unit .image {
+  -webkit-box-shadow: 0 0 0 1px #bebebe;
+  box-shadow: 0 0 0 1px #bebebe;
+  display: inline-block;
+  max-height: 70px;
+  overflow: hidden;
+  width: 50px;
+}
+
+.data {
+  display: table-cell;
+  line-height: 1.0em;
+  margin: 0;
+  padding: 0;
+    padding-left: 0px;
+  padding-left: 8px;
+  vertical-align: top;
+}
