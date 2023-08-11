@@ -107,7 +107,7 @@ console.log(selectorName,btnWidth,slideMargin)
         $slideBlock.find(".widget-slide").animate({
             marginLeft : "0px"
             }, {
-            duration : 500,
+            duration : 0,
             easing   : "swing",
             complete : function() {
               for(let i=0;i<moveSlideNum;i++){
