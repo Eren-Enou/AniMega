@@ -6,22 +6,90 @@
     align-items: center;
   }
   
-  /* To make the ul inside menu_left display horizontally */
-  #menu_left ul {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  
   #menu_left {
     display: inline-block;
     float: left;
   }
 
+  #nav {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+ /* Define the default style for .nav li */
+  #nav li {
+    background-color: #000000; /* Change the background color when hovering */
+    color: #7504a1; /* Change the text color when hovering */
+  }
+
+/* Define the hover effect for .nav li */
+  #nav li:hover {
+  /* Your hover styles here, for example: */
+  background-color: #f0f0f0; /* Change the background color when hovering */
+  color: #000; /* Change the text color when hovering */
+  }
+
+/* CSS in nav-style.css */
+#nav li {
+  position: relative; /* Make sure the parent li is positioned relatively */
+}
+
+.x-wider {
+  display: none; /* Hide the element by default */
+  position: absolute; /* Position absolutely relative to the parent li */
+  top: 100%; /* Set the distance below the top edge of the parent li */
+  left: 0; /* Position the .x-wider element to the left edge of the parent li */
+  z-index: 1; /* Set a higher z-index value if needed */
+}
+
+/* Define the style for .x-wider when its parent has the .hover class */
+#nav li.hover .x-wider {
+  display: block; /* Show the element when its parent has the .hover class */
+}
+
+
+
+  .small {
+    width: 70px;
+  }
+
+  #nav li {
+    display: block;
+    float: left;
+    position: relative;
+    text-indent: 5px;
+    width: 100px;
+    z-index: 90;
+  }
+
+  #nav li a {
+    color: #fff;
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    height: 24px;
+    padding: 10px 5px 0;
+    text-align: left;
+    text-decoration: none;
+  }
+
+  a, a:visited {
+    color: #1c439b;
+    text-decoration: none;
+  }
+
+  #nav li.hover a.nonlink {
+    cursor: default;
+  }
+
+  #nav li a:hover, #nav li.hover a {
+    background: #1c439b;
+    color: black;
+  }
+
   #menu_right {
     color: #2e51a2;
-    display: inline-block;
     float: right;
     height: 34px;
     position: relative;

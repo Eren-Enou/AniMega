@@ -3,30 +3,86 @@
 </head>
 
 <div id="menu">
-    <div id="menu_right">
-        <form id="searchForm" action="/search" method="GET">
-            <input id="searchInput" type="text" name="query" placeholder="Search AniMEGA">
-          </form>
-          <div id="resultsContainer">
-          </div>
-    </div>
     <div id="menu_left">
         <ul id="nav" class="js-color-pc-constant">
             <li class="small">
-                <a class="non-link" href="#">Anime</a>
+                <a href="#" class="non-link">Anime</a>
+                <ul class="x-wider">
+                    <li class=""><a href="#">Anime Search</a></li>
+                    <li class=""><a href="#">Top Anime</a></li>
+                    <li class=""><a href="#">Seasonal Anime</a></li>
+                    <li class=""><a href="#">Videos</a></li>
+                    <li class=""><a href="#">Reviews</a></li>
+                    <li><a href="#">Recommendations</a></li>
+                    <li><a href="#">2023 Challenge</a></li>
+                    <li><a href="#">Fantasy Anime League</a></li>
+                </ul>
             </li>
-            <li class="small"><a class="non-link" href="#">Manga</a>
+            <li class="small">
+                <a href="#" class="non-link">Manga</a>
+                <ul class="x-wider">
+                    <li class=""><a href="#">Manga Search</a></li>
+                    <li class=""><a href="#">Top Manga</a></li>
+                    <li class=""><a href="#">Manga Store</a></li>
+                    <li class=""><a href="#">Reviews</a></li>
+                    <li class=""><a href="#">Recommendations</a></li>
+                    <li><a href="#">2023 Challenge</a></li>
+                </ul>
             </li>
-            <li class=""><a class="non-link" href="#">Community</a>
+            <li class="small">
+                <a href="#" class="non-link">Community</a>
+                <ul class="x-wider">
+                    <li class=""><a href="#">Interest Stacks</a></li>
+                    <li class=""><a href="#">Forums</a></li>
+                    <li class=""><a href="#">Clubs</a></li>
+                    <li class=""><a href="#">Blogs</a></li>
+                    <li class=""><a href="#">Users</a></li>
+                </ul>
             </li>
-            <li class="small2"><a class="non-link" href="#">Industry</a>
+            <li class="small">
+                <a href="#" class="non-link">Industry</a>
+                <ul class="x-wider">
+                    <li class=""><a href="#">News</a></li>
+                    <li class=""><a href="#">Featured Articles</a></li>
+                    <li class=""><a href="#">People</a></li>
+                    <li class=""><a href="#">Characters</a></li>
+                    <li class=""><a href="#">Companies</a></li>
+                </ul>
             </li>
-            <li class="small"><a class="non-link" href="#">Watch</a>
-            </li>
-            <li class="smaller"><a class="non-link" href="#">Read</a>
-            </li>
-            <li class="smaller"><a class="non-link" href="#">Help</a>
+            <li class="small">
+                <a href="#" class="non-link">Help</a>
+                <ul class="x-wider">
+                    <li class=""><a href="#">Manga Search</a></li>
+                    <li class=""><a href="#">Top Manga</a></li>
+                    <li class=""><a href="#">Manga Store</a></li>
+                    <li class=""><a href="#">Reviews</a></li>
+                    <li class=""><a href="#">Recommendations</a></li>
+                    <li><a href="#">2023 Challenge</a></li>
+                </ul>
             </li>
         </ul>
     </div>
-</div>
+    <div id="menu_right">
+        <form id="searchForm" class="searchForm" action="/search" method="GET">
+            <input id="searchInput" type="text" name="query" placeholder="Search AniMEGA">
+        </form>
+        <div id="resultsContainer" class="resultsContainer">
+        </div>
+    </div>
+
+    <!-- Place this within the <head> section or before the closing </body> tag -->
+<script>
+    // Get all .nav li elements
+    const navItems = document.querySelectorAll("#nav li");
+
+    // Add event listeners for mouseenter and mouseleave
+    navItems.forEach(item => {
+        item.addEventListener("mouseenter", () => {
+            item.classList.add("hover"); // Add "hover" class when mouse enters
+        });
+
+        item.addEventListener("mouseleave", () => {
+            item.classList.remove("hover"); // Remove "hover" class when mouse leaves
+        });
+    });
+</script>

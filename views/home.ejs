@@ -6,14 +6,29 @@
     <section class="nav-bar">
       <%- include('./partials/home-menu') %>
     </section>
-    <!-- <section class="anime-search">
-      <%- include('./partials/search-bar') %>
-    </section> -->
-    <section class="anime-card-section">
-      <div class="anime-card">
-        <%- include('./partials/anime-carousel') %>
+    <div class="content">
+      <div class="left-column">
+        <section class="anime-card-section widget-container-left">
+          <div class="anime-card">
+            <%- include('./partials/anime-carousel') %>
+          </div>
+        </section>
+
       </div>
-    </section>
+      <div class="right-column">
+        <section class="widget-container-right">
+          <div class="widget popular-anime right">
+            <div class="ranking-digest">
+              <div class="ranking-header">
+                <h2 class="h2_side">Most Popular Anime</h2>
+              </div>
+              <%- include('./partials/popular-anime') %>
+            </div>
+          </div>
+        </section>
+      </div>
+
+    </div>
     
   </main>
   <%- include('./partials/footer') %>

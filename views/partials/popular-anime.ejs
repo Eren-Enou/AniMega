@@ -1,0 +1,20 @@
+<ul class="ranking-list">
+    <% popularAnime.forEach((anime, index) => { %>
+        <li class="ranking-unit">
+            <span class="rank"><%= index + 1 %></span>
+            <p class="data-image">
+                <a href="#" class="image">
+                    <img src="<%= anime.coverImage.medium %>" alt="<%= anime.title.english %>">
+                </a>
+            </p>
+            <div class="data">
+                <h3 class="h3_side">
+                    <a href="#" class="title"><%= anime.title.romaji %></a>
+                </h3>
+                <span class="info">
+                    TV, Episodes: <%= anime.episodes %>, Popularity: <%= anime.popularity %>
+                </span>
+            </div>
+        </li>
+    <% }) %>
+</ul>

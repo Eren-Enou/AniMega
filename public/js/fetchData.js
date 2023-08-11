@@ -289,6 +289,58 @@ async function getAiringAnime() {
   }
 }
 
+// Function to get most popular anime overall
+async function getPopularAnime() {
+  // GraphQL query to fetch airing anime
+  const popularQuery = `
+  query airingAnime {
+    Page(page: 1, perPage: 10) {
+      media(
+        type: ANIME
+        sort: POPULARITY_DESC
+        isAdult: false
+        format:TV
+      ) {
+        id
+        title {
+          romaji
+          english
+        }
+        coverImage {
+          large
+          medium
+        }
+        episodes
+        averageScore
+        popularity
+      }
+    }
+  }
+  `;
+  const variables = {
+  };
+  const options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    },
+    data: {
+      query: popularQuery,
+      variables: variables
+    }
+  };
+
+  try {
+    const response = await axios('https://graphql.anilist.co', options);
+    const data = handleResponse(response);
+    return data.data.Page.media;
+  } catch (error) {
+    console.error(error);
+    throw new Error('An error occurred while fetching airing data.');
+  }
+}
+
 // Function to handle the response from the API
 function handleResponse(response) {
   if (response.status >= 200 && response.status < 300) {
@@ -301,5 +353,6 @@ function handleResponse(response) {
 module.exports = {
   searchData,
   getAiringAnime,
+  getPopularAnime,
   queryMediaID
 };

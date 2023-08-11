@@ -26,19 +26,19 @@ This code aims to provide a carousel functionality that can be used to navigate 
 
 */
 document.addEventListener("DOMContentLoaded", function() {
-  var carousel = document.querySelector(".anime-carousel-list");
-  var prevBtn = document.querySelector(".carousel-btn-prev");
-  var nextBtn = document.querySelector(".carousel-btn-next");
+  let carousel = document.querySelector(".anime-carousel-list");
+  let prevBtn = document.querySelector(".carousel-btn-prev");
+  let nextBtn = document.querySelector(".carousel-btn-next");
 
-  var currentSlide = 0;
-  var totalSlides = document.querySelectorAll(".anime-carousel-item").length;
+  let currentSlide = 0;
+  let totalSlides = document.querySelectorAll(".anime-carousel-item").length;
 
   function updateSlide() {
-    var windowWidth = window.innerWidth;
-    var itemWidth = Math.min(250, windowWidth / 4); // Maximum of 250 or 25% of the window width
-    var visibleSlides = Math.floor(windowWidth / itemWidth); // Number of visible slides based on the window width
-    var carouselWidth = itemWidth * totalSlides;
-    var offset = -currentSlide * Math.abs(itemWidth) + "px";
+    let windowWidth = window.innerWidth;
+    let itemWidth = Math.min(250, windowWidth / 4); // Maximum of 250 or 25% of the window width
+    let visibleSlides = Math.floor(windowWidth / itemWidth); // Number of visible slides based on the window width
+    let carouselWidth = itemWidth * totalSlides;
+    let offset = -currentSlide * Math.abs(itemWidth) + "px";
     carousel.style.width = carouselWidth + "px";
     carousel.style.transform = "translateX(" + offset + ")";
   }
