@@ -27,7 +27,7 @@ const cheerio = require('cheerio'); //parsing/manipulating html
 
 
 const router = express.Router();
-const { searchData, getAiringAnime, queryMediaID, getPopularAnime, getPopularAiringAnime, getRecentReviews } = require('../public/js/fetchData.js');
+const { searchData, getAiringAnime, queryMediaID, getPopularAnime, getPopularAiringAnime, getRecentReviews, getUpcomingEpisodes } = require('../public/js/fetchData.js');
 const sessionUtils = require('../public/js/sessionUtils');
 const setUserMiddleware = require('../middleware/setUser.js');
 
@@ -92,6 +92,15 @@ async function recentReviews() {
   }
 }
 
+async function upcomingEpisodes() {
+  try {
+    return await getUpcomingEpisodes();
+  } catch (error) {
+    console.error(error);
+    throw new Error('An error occurred while fetching upcoming data.');
+  }
+}
+
 
 //Helper search media ID function
 async function searchMediaID(mediaID) {
@@ -121,10 +130,11 @@ router.get('/home', async (req, res) => {
     const popularAnimeMedia = await popularAnime();
     const popularAiringAnimeMedia = await popularAiringAnime();
     const reviews = await recentReviews();
+    const upcomingEpisodeList = await upcomingEpisodes();
     console.log(req.user);
 
     //render home with Search, AiringAnime, User passed in
-    res.render('home', { search: searchResults, airingAnime: airingAnimeMedia, popularAnime: popularAnimeMedia,popularAiringAnime: popularAiringAnimeMedia,reviews:reviews, user: req.user }); 
+    res.render('home', { search: searchResults, airingAnime: airingAnimeMedia, popularAnime: popularAnimeMedia,popularAiringAnime: popularAiringAnimeMedia, reviews:reviews, upcoming:upcomingEpisodeList, user: req.user }); 
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred with user' });

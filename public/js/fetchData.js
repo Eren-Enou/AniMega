@@ -449,7 +449,51 @@ async function getRecentReviews() {
 }
 
 
+async function getUpcomingEpisodes() {
+  // GraphQL query to fetch airing anime
+  const upcomingEpisodes = `
+  query upcomingEpisodes {
+    Page(page:1, perPage:20) {
+      airingSchedules(notYetAired:true, sort:TIME) {
+        timeUntilAiring
+        episode
+        media{
+          format
+          coverImage{
+            medium
+          }
+          title{
+            english
+            romaji
+          }
+        }
+      }
+    }
+  }
+  `;
+  const variables = {
+  };
+  const options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    },
+    data: {
+      query: upcomingEpisodes,
+      variables: variables
+    }
+  };
 
+  try {
+    const response = await axios('https://graphql.anilist.co', options);
+    const data = handleResponse(response);
+    return data.data.Page.airingSchedules;
+  } catch (error) {
+    console.error(error);
+    throw new Error('An error occurred while fetching upcoming data.');
+  }
+}
 
 // Function to handle the response from the API
 function handleResponse(response) {
@@ -466,5 +510,6 @@ module.exports = {
   getPopularAnime,
   getPopularAiringAnime,
   getRecentReviews,
+  getUpcomingEpisodes,
   queryMediaID
 };

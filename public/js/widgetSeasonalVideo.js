@@ -121,4 +121,5 @@ console.log(selectorName,btnWidth,slideMargin)
   }
 
   animeSlider("widget-seasonal-video",40,6);
+  animeSlider("widget-upcoming-video",40,6);
 });
