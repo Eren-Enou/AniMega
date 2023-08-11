@@ -237,7 +237,7 @@ async function getAiringAnime() {
   // GraphQL query to fetch airing anime
   const airingQuery = `
   query airingAnime {
-    Page(page: 1, perPage: 100) {
+    Page(page: 1, perPage: 20) {
       media(
         status: RELEASING
         type: ANIME

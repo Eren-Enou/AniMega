@@ -1,0 +1,39 @@
+<article class="widget-container left">
+    <div class="widget seasonal left">
+        <div class="widget-header">
+            <h2 class="index_h2_seo">
+                <a href="#">
+                    Summer 2023 Anime
+                </a>
+            </h2>
+        </div>
+        <div class="widget-content">
+            <div id="widget-seasonal-video" class="widget-slide-block">
+                <div class="btn-widget-slide-side left">
+                    <span class="btn-inner"></span>
+                </div>
+                <!-- <div class="btn-widget-slide-side right">
+                    <span class="btn-inner"></span>
+                </div> -->
+                <div class="widget-slide-outer">
+                    <ul class="widget-slide js-widget-slide">
+                        <% airingAnime.forEach(anime => { %>
+                            <li class="btn-anime">
+                                <a href="#" class="link">
+                                    <h3 class="h3_character_name">
+                                        <span class="title js-color-pc-constant">
+                                            <%= anime.title.english || anime.title.romaji %>
+                                        </span>
+                                    </h3>
+                                    <img src="<%= anime.coverImage.large %>" alt="<%= anime.title.english || anime.title.romaji %>" width="160" height="220">
+                                </a>
+                            </li>
+                        <% }) %>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
+
+<script src="/js/widgetSeasonalVideo.js"></script>

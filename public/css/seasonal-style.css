@@ -1,0 +1,188 @@
+.left-column {
+    border-color: #e5e5e5;
+    border-style: solid;
+    border-width: 0 1px 0 0;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    vertical-align: top;
+    width: 740px;
+  }
+
+  .widget-container {
+    margin: 0 10px 20px;
+  }
+
+  .widget-container .widget {
+    margin: 0 0 20px;
+  }
+  
+  .widget-container .widget .widget-header {
+    border-color: #bebebe;
+    border-style: solid;
+    border-width: 0 0 1px;
+    color: #000;
+    font-size: 12px;
+    font-weight: 700;
+    margin: 0;
+    padding: 3px 0;
+  }
+
+  .widget-container .widget .index_h2_seo {
+    border-style: none;
+    display: inline;
+    font-family: Verdana,Arial;
+    font-weight: 700;
+  }
+
+  .widget-slide-block {
+    overflow: hidden;
+    position: relative;
+  }
+
+  #widget-seasonal-video .btn-widget-slide-side.left {
+    background-position: -40px 0;
+  }
+
+  #widget-seasonal-video .btn-widget-slide-side {
+    background-size: 80px auto;
+    height: 80px;
+    margin-top: -40px;
+    width: 40px;
+  }
+
+  .widget-slide-block .btn-widget-slide-side.left {
+    background-position: -40px 0;
+    left: 0;
+  }
+
+  .widget-slide-block .btn-widget-slide-side.right {
+    background-position: 0 0;
+    right: 0;
+  }
+
+
+  
+  .widget-slide-block .btn-widget-slide-side {
+    background-image: url(/img/btn_handle.png);
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    background-size: 80px auto;
+    cursor: pointer;
+    display: inline-block;
+    height: 80px;
+    margin-top: -40px;
+    overflow: hidden;
+    position: absolute;
+    top: 50%;
+    -webkit-transition-duration: .3s;
+    transition-duration: .3s;
+    -webkit-transition-property: all;
+    transition-property: all;
+    -webkit-transition-timing-function: ease-in-out;
+    transition-timing-function: ease-in-out;
+    width: 40px;
+    z-index: 10;
+  }
+
+  #widget-seasonal-video .widget-slide-outer {
+    height: 220px;
+  }
+
+  .widget-slide-block .widget-slide-outer {
+    display: block;
+    margin-top: 4px;
+    overflow: hidden;
+    position: relative;
+    width: 720px;
+  }
+
+  #widget-seasonal-video .widget-slide {
+    height: 220px;
+  }
+
+  .widget-slide-block .widget-slide {
+    display: block;
+    margin: 0;
+    margin-left: 0px;
+    overflow: hidden;
+    padding: 0;
+    width: 720px;
+    transition: margin-left 0.5s ease-in-out;
+  }
+
+  #widget-seasonal-video .widget-slide .btn-anime {
+    height: 220px;
+    margin-right: 6px;
+    width: 160px;
+  }
+
+  .widget-slide-block .widget-slide .btn-anime {
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: #e5e5e5 1px solid;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: inline-block;
+    float: left;
+    margin-right: 12px;
+    opacity: 1;
+    overflow: hidden;
+    position: relative;
+    -webkit-transition-duration: .3s;
+    transition-duration: .3s;
+    -webkit-transition-property: opacity;
+    transition-property: opacity;
+    -webkit-transition-timing-function: ease-in-out;
+    transition-timing-function: ease-in-out;
+  }
+
+  .h3_character_name {
+    display: inline;
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 1.5em;
+  }
+
+  .btn-widget-slide-side {
+    opacity: 0;
+    transition: opacity 0.3s ease; /* Adding a smooth transition effect */
+}
+
+.btn-widget-slide-side.active {
+    opacity: 1;
+}
+
+#widget-seasonal-video .widget-slide .link .title {
+    padding: 15px 5px 5px;
+    width: calc(100% - 5px - 5px);
+  }
+
+  .widget-slide-block .widget-slide .btn-anime .link .title {
+    background-image: url(/img/image_box_shadow_bottom.png);
+    background-position: left bottom;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    bottom: 0;
+    color: #fff;
+    display: inline-block;
+    font-family: Avenir,lucida grande,tahoma,verdana,arial,sans-serif;
+    font-size: 11px;
+    left: 0;
+    line-height: 1.2em;
+    padding: 15px 5px 5px;
+    position: absolute;
+    text-shadow: rgba(0,0,0,.8) 1px 1px 0;
+  }
+
+  #widget-seasonal-video .btn-widget-slide-side .btn-inner {
+    height: 80px;
+    width: 40px;
+  }
+
+  .widget-slide-block .btn-widget-slide-side .btn-inner {
+    cursor: pointer;
+    display: inline-block;
+    height: 80px;
+    width: 40px;
+  }

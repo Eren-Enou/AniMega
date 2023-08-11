@@ -121,7 +121,6 @@ router.get('/home', async (req, res) => {
     const popularAnimeMedia = await popularAnime();
     const popularAiringAnimeMedia = await popularAiringAnime();
     const reviews = await recentReviews();
-    console.log(reviews);
     console.log(req.user);
 
     //render home with Search, AiringAnime, User passed in
