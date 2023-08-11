@@ -460,7 +460,7 @@ async function getUpcomingEpisodes() {
         media{
           format
           coverImage{
-            medium
+            large
           }
           title{
             english
