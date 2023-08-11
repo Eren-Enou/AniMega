@@ -1,3 +1,28 @@
-<ul>
-    
-</ul>
+<h2 class="section-header link">
+    Recent Reviews
+</h2>
+<div class="review-wrap">
+    <% reviews.forEach(review => { %>
+        <a href="#" class="review-card">
+            <div class="review-banner">
+                <% if (review.media.bannerImage) { %>
+                    <img class="review-banner-img" src="<%= review.media.bannerImage %>" alt="<%= review.media.title.romaji %>">
+                <% } %>
+                <div class="read-review">
+                    <span>
+                        Read Full Review
+                    </span>
+                </div>
+            </div>
+            
+            <div class="review-content">
+                <div class="review-header">
+                    Review of <%= review.media.title.romaji %>
+                </div>
+                <div class="review-summary">
+                    <%= review.summary %>
+                </div>
+            </div>
+        </a>
+    <% }) %>
+</div>

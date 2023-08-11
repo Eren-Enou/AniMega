@@ -397,6 +397,60 @@ async function getPopularAiringAnime() {
   }
 }
 
+async function getRecentReviews() {
+  // GraphQL query to fetch airing anime
+  const recentReviewQuery = `
+  query recentReview {
+    Page(
+      page: 1
+      perPage: 20
+    ) {
+      reviews(
+        sort:CREATED_AT_DESC
+        mediaType:ANIME
+      ) {
+        summary
+        body(asHtml:true)
+        score
+        media {
+          id
+          title{
+            romaji
+            english
+          }
+          bannerImage
+        }
+      }
+    }
+  }
+  `;
+  const variables = {
+  };
+  const options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    },
+    data: {
+      query: recentReviewQuery,
+      variables: variables
+    }
+  };
+
+  try {
+    const response = await axios('https://graphql.anilist.co', options);
+    const data = handleResponse(response);
+    return data.data.Page.reviews;
+  } catch (error) {
+    console.error(error);
+    throw new Error('An error occurred while fetching airing data.');
+  }
+}
+
+
+
+
 // Function to handle the response from the API
 function handleResponse(response) {
   if (response.status >= 200 && response.status < 300) {
@@ -411,5 +465,6 @@ module.exports = {
   getAiringAnime,
   getPopularAnime,
   getPopularAiringAnime,
+  getRecentReviews,
   queryMediaID
 };
