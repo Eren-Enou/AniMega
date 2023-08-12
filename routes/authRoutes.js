@@ -23,22 +23,22 @@ const bcrypt = require('bcrypt');
 const sessionUtils = require('../public/js/sessionUtils');
 
 // Create a PostgreSQL connection pool on local host
-// const pool = new Pool({
-//   host: '127.0.0.1',
-//   user: 'postgres',
-//   password: 'password',
-//   database: 'animega',
-//   port: 5432,
-// });
-
-// Create a PostgreSQL connection pool connected to AWS RDS
 const pool = new Pool({
-  host: 'animega-0.cir5liljprsp.us-west-1.rds.amazonaws.com', // Replace with your RDS endpoint
-  user: 'postgres', // Replace with your RDS username
-  password: 'password', // Replace with your RDS password
+  host: '127.0.0.1',
+  user: 'postgres',
+  password: 'password',
   database: 'animega',
   port: 5432,
 });
+
+// Create a PostgreSQL connection pool connected to AWS RDS NEED TO CREATE NEW 
+// const pool = new Pool({
+//   host: 'animega-0.cir5liljprsp.us-west-1.rds.amazonaws.com', // Replace with your RDS endpoint
+//   user: 'postgres', // Replace with your RDS username
+//   password: 'password', // Replace with your RDS password
+//   database: 'animega',
+//   port: 5432,
+// });
 
 
 // Connect to the database

@@ -119,9 +119,10 @@ async function searchMediaID(mediaID) {
 async function reviewByID(reviewID) {
   try {
     const data = await getReviewByID(reviewID);
-    const body = extractTextFromHTML(data.body);
-    data.body = body;
-    return data;
+    const body = extractTextFromHTML(data.data.Review.body);
+    data.data.Review.body = body;
+    console.log(data.data.Review);
+    return data.data.Review;
   } catch (error) {
     console.error(error);
     throw new Error('An error occurred while fetching media ID data.');
@@ -193,21 +194,17 @@ router.get('/anime/:id', async (req, res) => {
   }
 });
 // Route to review-page
-router.get('/review/:id', async (req, res) =>{
-
-  const reviewID = req.params.id;
+router.get('/review/:reviewID', async (req, res) => {
   try {
+    const reviewID = req.params.reviewID;
     const reviewData = await reviewByID(reviewID);
-    // Render the webpage and pass the modified mediaData to the template
+    
+    // Pass the reviewData object to the EJS template
+    console.log(reviewData);
     res.render('review-page', { reviewData: reviewData });
   } catch (error) {
-    if (error.response) {
-      // Access the response object in the error
-      console.log(error.response);
-    } else {
-      // Handle other types of errors
-      console.log('Error:', error.message);
-    }
+    console.error(error);
+    res.status(500).send('Internal Server Error');
   }
 });
 

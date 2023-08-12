@@ -8,24 +8,32 @@
     <div class="page-content">
         <div class="review">
             <div class="banner">
-
+              <img src="<%= reviewData.media.bannerImage %>" alt="#">
+                <!-- You can embed information here -->
+                <h2><%= reviewData.summary %></h2>
+                <p><%= reviewData.media.title.romaji %> - <%= reviewData.media.title.english %></p>
+                <!-- Add more information as needed -->
             </div>
             <div class="container">
                 <div class="body">
                     <div class="review-content">
-
+                        <!-- Embed the review body -->
+                        <%- reviewData.body %>
                     </div>
                     <div class="score">
-
+                        <!-- Embed the review score -->
+                        <p>Score: <%= reviewData.score %></p>
                     </div>
                 </div>
                 <div class="rating">
-                    
+                    <!-- Embed the rating information -->
+                    <p>Rating: <%= reviewData.rating %>/<%= reviewData.ratingAmount %></p>
+                    <p>User Rating: <%= reviewData.userRating %></p>
                 </div>
             </div>
         </div>
     </div>
 
   </main>
-  <link rel="stylesheet" href="/css/header-style.css">
+  <link rel="stylesheet" href="/css/review-style.css">
 </body>

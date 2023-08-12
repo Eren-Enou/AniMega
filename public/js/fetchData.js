@@ -409,6 +409,7 @@ async function getRecentReviews() {
         sort:CREATED_AT_DESC
         mediaType:ANIME
       ) {
+        id
         summary
         body(asHtml:true)
         score
@@ -497,10 +498,9 @@ async function getUpcomingEpisodes() {
 }
 
 async function getReviewByID(reviewID) {
-  // GraphQL query to fetch airing anime
+  // GraphQL query to fetch review by review ID
   const reviewByID = `
-
-  query GetReview($id: Int!) {
+  query GetReview($id: Int) {
     Review(id: $id) {
       id
       userId
@@ -521,6 +521,7 @@ async function getReviewByID(reviewID) {
         name
       }
       media {
+        bannerImage
         id
         title {
           romaji
@@ -548,10 +549,10 @@ async function getReviewByID(reviewID) {
   try {
     const response = await axios('https://graphql.anilist.co', options);
     const data = handleResponse(response);
-    return data.data.Page.airingSchedules;
+    return data;
   } catch (error) {
     console.error(error);
-    throw new Error('An error occurred while fetching upcoming data.');
+    throw new Error('An error occurred while fetching review data.');
   }
 }
 

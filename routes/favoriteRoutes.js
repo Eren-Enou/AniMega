@@ -22,14 +22,23 @@ const { Pool } = require('pg');
 // Create instance of express router
 const router = express.Router();
 
-// Create pool of PostgreSQL db connection
+// Create a PostgreSQL connection pool on local host
 const pool = new Pool({
-  host: 'animega-0.cir5liljprsp.us-west-1.rds.amazonaws.com',
+  host: '127.0.0.1',
   user: 'postgres',
   password: 'password',
   database: 'animega',
   port: 5432,
 });
+
+// Create pool of PostgreSQL db connection
+// const pool = new Pool({
+//   host: 'animega-0.cir5liljprsp.us-west-1.rds.amazonaws.com',
+//   user: 'postgres',
+//   password: 'password',
+//   database: 'animega',
+//   port: 5432,
+// });
 
 // POST request to insert data into favorites table
 router.post('/favorites/:userId/:animeId', (req, res) => {
