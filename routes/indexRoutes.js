@@ -27,7 +27,7 @@ const cheerio = require('cheerio'); //parsing/manipulating html
 
 
 const router = express.Router();
-const { searchData, getAiringAnime, queryMediaID, getPopularAnime, getPopularAiringAnime, getRecentReviews, getUpcomingEpisodes } = require('../public/js/fetchData.js');
+const { searchData, getAiringAnime, queryMediaID, getPopularAnime, getPopularAiringAnime, getRecentReviews, getUpcomingEpisodes,getReviewByID  } = require('../public/js/fetchData.js');
 const sessionUtils = require('../public/js/sessionUtils');
 const setUserMiddleware = require('../middleware/setUser.js');
 
@@ -115,6 +115,21 @@ async function searchMediaID(mediaID) {
   }
 }
 
+//Helper search media ID function
+async function reviewByID(reviewID) {
+  try {
+    const data = await getReviewByID(reviewID);
+    const body = extractTextFromHTML(data.body);
+    data.body = body;
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error('An error occurred while fetching media ID data.');
+  }
+}
+
+
+
 // Helper function to convert HTML to readable text using cheerio
 function extractTextFromHTML(html) {
   const $ = cheerio.load(html);
@@ -156,7 +171,7 @@ router.get('/user/', async  (req, res) => {
 
 
 // Route to open a new webpage based on mediaID
-router.get('/media/:id', async (req, res) => {
+router.get('/anime/:id', async (req, res) => {
   const mediaID = req.params.id;
   try {
     const mediaData = await searchMediaID(mediaID);
@@ -167,6 +182,24 @@ router.get('/media/:id', async (req, res) => {
     
     // Render the webpage and pass the modified mediaData to the template
     res.render('bio-page', { media: { ...mediaData, description: modifiedDescription }, user: user });
+  } catch (error) {
+    if (error.response) {
+      // Access the response object in the error
+      console.log(error.response);
+    } else {
+      // Handle other types of errors
+      console.log('Error:', error.message);
+    }
+  }
+});
+// Route to review-page
+router.get('/review/:id', async (req, res) =>{
+
+  const reviewID = req.params.id;
+  try {
+    const reviewData = await reviewByID(reviewID);
+    // Render the webpage and pass the modified mediaData to the template
+    res.render('review-page', { reviewData: reviewData });
   } catch (error) {
     if (error.response) {
       // Access the response object in the error

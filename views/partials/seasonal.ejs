@@ -2,7 +2,7 @@
     <div class="widget seasonal left">
         <div class="widget-header">
             <h2 class="index_h2_seo">
-                <a href="#">
+                <a href="/anime/season">
                     Summer 2023 Anime
                 </a>
             </h2>
@@ -19,7 +19,7 @@
                     <ul class="widget-slide js-widget-slide">
                         <% airingAnime.forEach(anime => { %>
                             <li class="btn-anime">
-                                <a href="#" class="link">
+                                <a href="/anime/<%= anime.id %>" class="link">
                                     <h3 class="h3_character_name">
                                         <span class="title js-color-pc-constant">
                                             <%= anime.title.english || anime.title.romaji %>

@@ -19,7 +19,7 @@
                     <ul class="widget-slide js-widget-slide">
                         <% upcoming.forEach(upcomingAnime => { %>
                             <li class="btn-anime">
-                                <a href="#" class="link">
+                                <a href="/anime/<%= upcomingAnime.media.id %>" class="link">
                                     <h3 class="h3_character_name">
                                         <span class="title js-color-pc-constant">
                                             <%= upcomingAnime.media.title.english || upcomingAnime.media.title.romaji %> Episode <%= upcomingAnime.episode %>

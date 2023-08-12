@@ -458,6 +458,7 @@ async function getUpcomingEpisodes() {
         timeUntilAiring
         episode
         media{
+          id
           format
           coverImage{
             large
@@ -495,6 +496,65 @@ async function getUpcomingEpisodes() {
   }
 }
 
+async function getReviewByID(reviewID) {
+  // GraphQL query to fetch airing anime
+  const reviewByID = `
+
+  query GetReview($id: Int!) {
+    Review(id: $id) {
+      id
+      userId
+      mediaId
+      mediaType
+      summary
+      body(asHtml: true)
+      rating
+      ratingAmount
+      userRating
+      score
+      private
+      siteUrl
+      createdAt
+      updatedAt
+      user {
+        id
+        name
+      }
+      media {
+        id
+        title {
+          romaji
+          english
+        }
+      }
+    }
+  }
+  `;
+  const variables = {
+    id:reviewID
+  };
+  const options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    },
+    data: {
+      query: reviewByID,
+      variables: variables
+    }
+  };
+
+  try {
+    const response = await axios('https://graphql.anilist.co', options);
+    const data = handleResponse(response);
+    return data.data.Page.airingSchedules;
+  } catch (error) {
+    console.error(error);
+    throw new Error('An error occurred while fetching upcoming data.');
+  }
+}
+
 // Function to handle the response from the API
 function handleResponse(response) {
   if (response.status >= 200 && response.status < 300) {
@@ -511,5 +571,6 @@ module.exports = {
   getPopularAiringAnime,
   getRecentReviews,
   getUpcomingEpisodes,
+  getReviewByID,
   queryMediaID
 };

@@ -3,7 +3,7 @@
 </h2>
 <div class="review-wrap">
     <% reviews.forEach(review => { %>
-        <a href="#" class="review-card">
+        <a href="/review/<%= review.media.id %>" class="review-card">
             <div class="review-banner">
                 <% if (review.media.bannerImage) { %>
                     <img class="review-banner-img" src="<%= review.media.bannerImage %>" alt="<%= review.media.title.romaji %>">
