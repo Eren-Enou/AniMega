@@ -3,6 +3,15 @@ const express = require('express');
 const path = require('path');
 const ejs = require('ejs');
 const session = require('express-session');
+const { ApolloServer } = require('apollo-server');
+const { typeDefs, resolvers } = require('./local-graphql-server/schema'); // Path to your subdirectory
+
+const server = new ApolloServer({ typeDefs, resolvers });
+
+server.listen().then(({ url }) => {
+  console.log(`Local GraphQL Server running at ${url}`);
+});
+
 // const setUserMiddleware = require('./middleware/setUser.js');
 //config
 require('dotenv').config();

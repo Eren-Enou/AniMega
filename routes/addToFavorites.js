@@ -15,13 +15,21 @@ const { Pool } = require('pg');
 const router = express.Router();
 
 //create pool of PostgreSQL db connection
+// const pool = new Pool({
+//     host: 'animega-0.cir5liljprsp.us-west-1.rds.amazonaws.com', 
+//     user: 'postgres', 
+//     password: 'password', 
+//     database: 'animega',
+//     port: 5432,
+//   });
+
 const pool = new Pool({
-    host: 'animega-0.cir5liljprsp.us-west-1.rds.amazonaws.com', 
-    user: 'postgres', 
-    password: 'password', 
-    database: 'animega',
-    port: 5432,
-  });
+  host: 'localhost',
+  user: 'postgres',
+  password: 'password',
+  database: 'animega',
+  port: 5432,
+});
 
 //connect to PostgreSQL db
 pool.connect((err, client, release) => {
@@ -29,7 +37,7 @@ if (err) {
     console.error('Error connecting to the database: ' + err.stack);
     return;
 }
-console.log('Connected to the database');
+console.log('Connected to the database addToFavorites');
 });
 
 // POST request that attempts to insert the provided 'userId' and 'animeId' into the 'favorites' table in the PostgreSQL database using the connection pool.
