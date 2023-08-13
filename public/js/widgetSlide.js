@@ -1,8 +1,18 @@
-const $ = window.$;
 
 $(function () {
 
-  
+  // Settings dialog
+  if ($(".js-btn-settings").exists()) {
+    $(".js-btn-settings").click(function(e){
+      const settingsDialogData = $(e.currentTarget).data("settingsDialog")
+      Modal.generate()
+      Modal.buildFriendsUpdateSettingsDialog(settingsDialogData, (newData) => {
+        $(e.currentTarget).data("settingsDialog", newData)
+      })
+      Modal.show()
+    });
+  }
+
   const hasTouchEvent = ("ontouchstart" in window);
 
 
@@ -54,7 +64,6 @@ console.log(selectorName,btnWidth,slideMargin)
         direction : "right",
         button    : $(this)
       };
-
       moveSlideAnime(btn);
     })
 
@@ -147,5 +156,25 @@ console.log(selectorName,btnWidth,slideMargin)
     };
   }
 
-  animeSlider("widget-seasonal-video",40,6);
+  //anime slider in index.php
+  if($(".widget-slide-block")[0]){
+    animeSlider("widget-seasonal-video",40,6);
+    animeSlider("widget-episode-video",30,8);
+    animeSlider("widget-manga-store",30,8);
+    animeSlider("widget-promotional-video",30,8);
+  }//$('.watch-anime-slide-block')[0]
+
+  // anime eposide video widget
+  if ($(".js-widget-episode-video-link")[0]) {
+    $(".js-widget-episode-video-link").on("click", function() {
+      const url = $(this).data("url");
+      location.href = url;
+    });
+    $(".js-widget-episode-video-link .title").on("mouseover", function() {
+      $(this).parents(".js-widget-episode-video-link").css({ opacity: 1 });
+    }).on("mouseout", function() {
+      $(this).parents(".js-widget-episode-video-link").css({ opacity: "" });
+    });
+  }
 });
+

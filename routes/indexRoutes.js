@@ -27,7 +27,7 @@ const cheerio = require('cheerio'); //parsing/manipulating html
 
 
 const router = express.Router();
-const { searchData, getAiringAnime, queryMediaID, getPopularAnime, getPopularAiringAnime, getRecentReviews, getUpcomingEpisodes,getReviewByID  } = require('../public/js/fetchData.js');
+const { searchData, getAiringAnime, queryMediaID, getPopularAnime, getPopularAiringAnime, getRecentReviews, getUpcomingEpisodes,getReviewByID, checkDatabaseByTag, storeResponse  } = require('../public/js/fetchData.js');
 const sessionUtils = require('../public/js/sessionUtils');
 const setUserMiddleware = require('../middleware/setUser.js');
 
@@ -63,25 +63,46 @@ async function airingAnime() {
 }
 
 //Helper search popular anime function
-async function popularAnime() {
+async function popularAnime(tag) {
   try {
-    const data = await getPopularAnime();
-    return data;
+    // Check the database for elements with the matching tag
+    const dataFromDatabase = await checkDatabaseByTag(tag);
+    
+    if (dataFromDatabase) {
+      // Data was found in the database, use it
+      return dataFromDatabase.data.Page.media;
+    } else {
+      // Data was not found in the database, make a GraphQL request
+      const dataFromGraphQL = await getPopularAnime();
+      // Store the data in the database
+      return dataFromGraphQL;
+    }
   } catch (error) {
     console.error(error);
     throw new Error('An error occurred while fetching popular data.');
   }
 }
 
-async function popularAiringAnime() {
+async function popularAiringAnime(tag) {
   try {
-    const data = await getPopularAiringAnime();
-    return data;
+    // Check the database for elements with the matching tag
+    const dataFromDatabase = await checkDatabaseByTag(tag);
+
+    if (dataFromDatabase) {
+      // Data was found in the database, use it
+      return dataFromDatabase.data.Page.media;
+    } else {
+      // Data was not found in the database, make a GraphQL request
+      const dataFromGraphQL = await getPopularAiringAnime();
+      // Store the data in the database
+      return dataFromGraphQL;
+    }
   } catch (error) {
     console.error(error);
     throw new Error('An error occurred while fetching popular data.');
   }
 }
+
 
 async function recentReviews() {
   try {
@@ -143,8 +164,8 @@ router.get('/home', async (req, res) => {
   try {
     const airingAnimeMedia = await airingAnime();
     const searchResults = await performSearch(searchTerm);
-    const popularAnimeMedia = await popularAnime();
-    const popularAiringAnimeMedia = await popularAiringAnime();
+    const popularAnimeMedia = await popularAnime("completed");
+    const popularAiringAnimeMedia = await popularAiringAnime("airing");
     const reviews = await recentReviews();
     const upcomingEpisodeList = await upcomingEpisodes();
     console.log(req.user);

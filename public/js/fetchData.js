@@ -34,6 +34,16 @@ This code demonstrates how to fetch data from the AniList API using GraphQL and 
 */
 
 const axios = require('axios');
+const { Pool } = require('pg');
+
+// Create a PostgreSQL connection pool
+const pool = new Pool({
+  host: 'localhost',
+  user: 'postgres',
+  password: 'password',
+  database: 'animega',
+  port: 5432,
+});
 
 // Function to query media details based on the media ID for the bio page
 async function queryMediaID(mediaID) {
@@ -334,6 +344,7 @@ async function getPopularAnime() {
   try {
     const response = await axios('https://graphql.anilist.co', options);
     const data = handleResponse(response);
+    storeResponse(data, "completed")
     return data.data.Page.media;
   } catch (error) {
     console.error(error);
@@ -390,6 +401,7 @@ async function getPopularAiringAnime() {
   try {
     const response = await axios('https://graphql.anilist.co', options);
     const data = handleResponse(response);
+    storeResponse(data, "airing");
     return data.data.Page.media;
   } catch (error) {
     console.error(error);
@@ -549,6 +561,7 @@ async function getReviewByID(reviewID) {
   try {
     const response = await axios('https://graphql.anilist.co', options);
     const data = handleResponse(response);
+
     return data;
   } catch (error) {
     console.error(error);
@@ -565,6 +578,120 @@ function handleResponse(response) {
   }
 }
 
+// Function to store data in the database
+async function storeResponse(response, tag) {
+  const { media } = response.data.Page;
+
+  try {
+    const client = await pool.connect();
+    for (const item of media) {
+      const queryCheck = `
+        SELECT media_id FROM anime WHERE media_id = $1;
+      `;
+
+      const valuesCheck = [item.id];
+      const result = await client.query(queryCheck, valuesCheck);
+
+      if (result.rowCount === 0) {
+        const query = `
+          INSERT INTO anime (media_id, title_romaji, title_english, cover_image_large, cover_image_medium, tag, popularity, episodes)
+          VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+        `;
+
+        const values = [item.id, item.title.romaji, item.title.english, item.coverImage.large, item.coverImage.medium, tag, item.popularity, item.episodes];
+
+        await client.query(query, values);
+      } else {
+        const queryUpdate = `
+          UPDATE anime SET popularity = $1, episodes = $2 WHERE media_id = $3;
+        `;
+
+        const valuesUpdate = [item.popularity, item.episodes, item.id];
+        await client.query(queryUpdate, valuesUpdate);
+      }
+    }
+    
+    client.release();
+
+    console.log('Data stored successfully.');
+  } catch (error) {
+    console.error('Error storing data:', error);
+  }
+}
+
+async function checkDatabase(mediaID) {
+  try {
+    const client = await pool.connect();
+
+    const query = `
+      SELECT * FROM anime WHERE media_id = $1;
+    `;
+
+    const values = [mediaID];
+
+    const result = await client.query(query, values);
+    
+    client.release();
+
+    if (result.rowCount > 0) {
+      return result.rows[0]; // Assuming you only expect one record with the given media_id
+    } else {
+      return null; // Return null if the record is not found
+    }
+  } catch (error) {
+    console.error('Error checking database:', error);
+    throw new Error('An error occurred while checking the database.');
+  }
+}
+
+// Function to check the database by tag
+async function checkDatabaseByTag(tag) {
+  try {
+    const client = await pool.connect();
+  
+    const query = `
+    SELECT * FROM anime WHERE tag = $1 ORDER BY popularity DESC;
+    `;
+  
+    const values = [tag];
+  
+    const result = await client.query(query, values);
+  
+    client.release();
+  
+    const formattedResponse = formatDatabaseResultToGraphQLResponse(result.rows);
+  
+    return formattedResponse;
+  } catch (error) {
+    console.error('Error checking database:', error);
+    throw new Error('An error occurred while checking the database.');
+  }
+}
+
+function formatDatabaseResultToGraphQLResponse(rows) {
+  return {
+    data: {
+      Page: {
+        media: rows.map(row => ({
+          id: row.media_id,
+          title: {
+            romaji: row.title_romaji,
+            english: row.title_english
+          },
+          coverImage: {
+            large: row.cover_image_large,
+            medium: row.cover_image_medium
+          },
+          episodes: row.episodes,
+          averageScore: row.average_score,
+          popularity: row.popularity
+        }))
+      }
+    }
+  };
+}
+
+
 module.exports = {
   searchData,
   getAiringAnime,
@@ -573,5 +700,7 @@ module.exports = {
   getRecentReviews,
   getUpcomingEpisodes,
   getReviewByID,
-  queryMediaID
+  queryMediaID,
+  checkDatabaseByTag,
+  storeResponse
 };
